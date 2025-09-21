@@ -20,11 +20,9 @@ Page
             anchors { left: parent.left; top: parent.top; right: parent.right }
         }
 
-        SearchField
-        {
+        SearchField {
             id: searchfield
             anchors { left: parent.left; top: pageheader.bottom; right: parent.right }
-            placeholderText: qsTr("Filter")
             inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
             labelVisible: false
             width: parent.width
