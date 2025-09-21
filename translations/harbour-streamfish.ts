@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en">
 <context>
     <name>AddPlayListItem</name>
     <message>
@@ -51,9 +51,10 @@
 <context>
     <name>PlayListItem</name>
     <message numerus="yes">
-        <source>%1 channel(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <source>%Ln channels</source>
+        <translation>
+            <numerusform>%Ln channel</numerusform>
+            <numerusform>%Ln channels</numerusform>
         </translation>
     </message>
 </context>

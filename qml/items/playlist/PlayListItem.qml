@@ -42,7 +42,7 @@ BackgroundItem
             verticalAlignment: Text.AlignTop
             font.pixelSize: Theme.fontSizeTiny
             elide: Text.ElideRight
-            text: qsTr("%1 channel(s)", '', channelsCount).arg(channelsCount)
+            text: qsTr("%Ln channels", '', channelsCount)
         }
     }
 }

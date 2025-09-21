@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="ru">
 <context>
     <name>AddPlayListItem</name>
     <message>
@@ -61,9 +61,11 @@
     <name>PlayListItem</name>
     <message numerus="yes">
         <location filename="../qml/items/playlist/PlayListItem.qml" line="45"/>
-        <source>%1 channel(s)</source>
-        <translation>
-            <numerusform>%1 каналов</numerusform>
+        <source>%Ln channels</source>
+        <translation type="unfinished">
+            <numerusform>%Ln канал</numerusform>
+            <numerusform>%Ln канала</numerusform>
+            <numerusform>%Ln каналов</numerusform>
         </translation>
     </message>
 </context>
