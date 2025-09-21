@@ -9,5 +9,9 @@ Name=StreamFish
 #
 # Remember to comment out the following line, if you do not want to use
 # a different app name in German locale (de).
-Name[de]=harbour-streamfish
+#Name[de]=harbour-streamfish
 
+[X-Sailjail]
+Permissions=Internet
+OrganizationName=io.github.roundedrectangle
+ApplicationName=streamfish

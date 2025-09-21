@@ -9,7 +9,9 @@
 int main(int argc, char *argv[])
 {
     QScopedPointer<QGuiApplication> application(SailfishApp::application(argc, argv));
-    application->setApplicationName("harbour-streamfish");
+    application->setOrganizationDomain("io.github.roundedrectangle");
+    application->setOrganizationName("io.github.roundedrectangle");
+    application->setApplicationName("streamfish");
 
     qmlRegisterUncreatableType<M3UChannel>("harbour.streamfish.Model", 1, 0, "M3UChannel", "");
     qmlRegisterUncreatableType<M3UPlayList>("harbour.streamfish.Model", 1, 0, "M3UPlayList", "");
