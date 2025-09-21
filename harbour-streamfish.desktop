@@ -12,6 +12,6 @@ Name=StreamFish
 #Name[de]=harbour-streamfish
 
 [X-Sailjail]
-Permissions=Internet
+Permissions=Internet;Audio
 OrganizationName=io.github.roundedrectangle
 ApplicationName=streamfish
