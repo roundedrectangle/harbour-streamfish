@@ -15,8 +15,8 @@ BackgroundItem
     PanelBackground
     {
         anchors.fill: parent
-        color: "transparent"
-        border { color: Theme.secondaryHighlightColor; width: 1 }
+        //color: "transparent"
+        //border { color: Theme.secondaryHighlightColor; width: 1 }
     }
 
     Column
