@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>res/channel.png</file>
+        <file>res/streamfish.svg</file>
     </qresource>
 </RCC>

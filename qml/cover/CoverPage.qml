@@ -1,29 +1,21 @@
-import QtQuick 2.1
+import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-CoverBackground
-{
-    id: coverpage
-
-    Label
-    {
-        id: label
+CoverBackground {
+    Column {
         anchors.centerIn: parent
-        text: qsTr("My Cover")
-    }
+        spacing: Theme.paddingLarge
 
-    CoverActionList
-    {
-        id: coveraction
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
+        Image {
+            source: "qrc:///res/streamfish.svg"
+            width: Theme.iconSizeExtraLarge
+            height: Theme.iconSizeExtraLarge
+            sourceSize: Qt.size(width, height)
+            anchors.horizontalCenter: parent.horizontalCenter
         }
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
+        Label {
+            text: qsTr("Streamfish")
+            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 }
-
-
