@@ -6,11 +6,7 @@
 
 PlayListManager::PlayListManager(QObject *parent) : QObject(parent)
 {
-    QString endpath = qApp->applicationName() + QDir::separator() + qApp->applicationName();
-    QDir cfgdir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
-    cfgdir.mkpath(endpath);
-
-    this->_configpath = cfgdir.absoluteFilePath(endpath);
+    this->_configpath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     this->_storage = new PlayListStorage(this->_configpath, this);
 }
 
