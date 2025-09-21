@@ -1,7 +1,7 @@
 Name:       harbour-streamfish
 
 Summary:    StreamFish is an IPTV client for SailfishOS
-Version:    1.0
+Version:    1.0.1
 Release:    1
 License:    LICENSE
 URL:        http://example.org/
