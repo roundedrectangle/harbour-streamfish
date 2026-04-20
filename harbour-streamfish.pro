@@ -46,13 +46,13 @@ TRANSLATIONS += translations/harbour-streamfish-ru.ts \
     translations/harbour-streamfish-it.ts
 
 DISTFILES += \
-    qml/pages/playlist/AddPlaylistPage.qml \
+    qml/pages/AddPlaylistPage.qml \
     qml/models/AddedPlayListModel.qml \
     qml/items/playlist/PlayListItem.qml \
-    qml/pages/playlist/ChannelsPage.qml \
-    qml/pages/playlist/PlaylistsPage.qml \
+    qml/pages/ChannelsPage.qml \
+    qml/pages/PlaylistsPage.qml \
     qml/items/playlist/ChannelItem.qml \
-    qml/pages/mediaplayer/MediaPlayerPage.qml \
+    qml/pages/MediaPlayerPage.qml \
     qml/items/playlist/ChannelLogo.qml \
     qml/js/UrlHelper.js \
     qml/js/TagParser.js
