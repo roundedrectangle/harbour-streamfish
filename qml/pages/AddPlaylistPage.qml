@@ -1,6 +1,6 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "../../js/UrlHelper.js" as UrlHelper
+import "../js/UrlHelper.js" as UrlHelper
 
 Dialog {
     canAccept: (nameField.text.length > 0) && UrlHelper.isUrl(urlField.text)

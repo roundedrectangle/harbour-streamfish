@@ -22,11 +22,11 @@ PlaylistsModel::PlaylistsModel(QObject *parent) : QAbstractListModel(parent) {
     load();
 }
 
-int PlaylistsModel::playListCount() const {
+int PlaylistsModel::playlistCount() const {
     return this->playlists.count();
 }
 
-M3UPlayList *PlaylistsModel::playListAt(int idx) const {
+M3UPlayList *PlaylistsModel::playlistAt(int idx) const {
     return this->playlists.at(idx);
 }
 
