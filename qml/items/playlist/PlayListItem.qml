@@ -5,10 +5,6 @@ GridItem {
     property alias title: titleLabel.text
     property int channelsCount
 
-    function tagSurround(s, tag, attributes) {
-        return "<" + tag + " " + (attributes || "") + ">" + s + "</" + tag + ">"
-    }
-
     // SPDX-FileCopyrightText: 2016 - 2019 Jolla Ltd.
     // SPDX-FileCopyrightText: 2025 Jolla Mobile Ltd
     //
@@ -51,11 +47,4 @@ GridItem {
             text: qsTr("%Ln channels", '', channelsCount)
         }
     }
-
-    /*OpacityRampEffect {
-        sourceItem: column
-        slope: 0.6
-        offset: 0
-        direction: OpacityRamp.TopToBottom
-    }*/
 }
