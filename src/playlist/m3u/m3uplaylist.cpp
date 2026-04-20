@@ -62,7 +62,7 @@ void M3UPlayList::download()
 {
     QNetworkReply* reply = this->networkManager()->get(QNetworkRequest(this->_url));
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onDownloadError(QNetworkReply::NetworkError))); // NOTE: Overload madness
-    connect(reply, &QNetworkReply::finished, this, &M3UPlayList::onDownloadFinished);
+    connect(reply, SIGNAL(finished()), this, SLOT(onDownloadFinished()));
 }
 
 void M3UPlayList::save(const QString &dest)
