@@ -70,3 +70,5 @@ HEADERS += \
 RESOURCES += \
     resources.qrc
 
+
+include(libs/opal.pri)
