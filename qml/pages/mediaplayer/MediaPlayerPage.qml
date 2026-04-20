@@ -1,125 +1,117 @@
 import QtQuick 2.1
 import QtMultimedia 5.0
 import Sailfish.Silica 1.0
-import "../../components/mediaplayer"
 
-Page
-{
-    readonly property bool playerActive: true
+Page {
+    id: page
+    objectName: 'mediaPlayerPage'
+    allowedOrientations: Orientation.LandscapeMask
+
     property var channel
 
-    id: mediaplayerpage
-    allowedOrientations : Orientation.Landscape | Orientation.LandscapeInverted
-
-    states: [ State { name: "error"
-                      PropertyChanges { target: mperror; showError: true }
-                      PropertyChanges { target: pcbusy; visible: false } },
-
-              State { name: "loading"
-                      PropertyChanges { target: mperror; showError: false }
-                      PropertyChanges { target: pcbusy; visible: true } },
-
-              State { name: "playing"
-                      PropertyChanges { target: mperror; showError: false }
-                      PropertyChanges { target: pcbusy; visible: false } }]
-
-    onStateChanged: {
-        //if((state === "") || (state === "error"))
-            //mptoolbar.keepVisible(true);
-    }
-
-    Video
-    {
+    Video {
         id: video
         anchors.fill: parent
         source: channel.url
-        autoPlay: false
+        autoPlay: true
 
-        onStatusChanged: {
-            if((playbackState !== MediaPlayer.PlayingState) && ((status === MediaPlayer.Loading) || (status === MediaPlayer.Stalled)))
-                mediaplayerpage.state = "loading";
-            else if(status === MediaPlayer.Loaded)
-                video.play();
-        }
+        readonly property bool isPlaying: playbackState === MediaPlayer.PlayingState
+        readonly property bool haveError: error !== MediaPlayer.NoError
 
-        onPlaybackStateChanged: {
-            var keep = video.playbackState !== MediaPlayer.PlayingState;
+        onPlaying:
+            if (overlay.active)
+                hideOverlayTimer.restart()
 
-            //mptoolbar.keepVisible(keep);
-            mptitle.keepVisible(keep);
+        onHaveErrorChanged:
+            if (haveError) stop()
 
-            if(video.playbackState === MediaPlayer.PlayingState)
-                mediaplayerpage.state = "playing";
-        }
-
-        onErrorChanged: {
-            if(video.error === MediaPlayer.NoError)
-                return;
-
-            mediaplayerpage.state = "error";
-            video.stop(); // Avoid MediaPlayer undefined behavior
-        }
-
-        BusyIndicator { id: pcbusy; anchors.centerIn: parent; visible: false; running: visible; size: BusyIndicatorSize.Large; z: 15 }
-
-        MediaPlayerTitle
-        {
-            id: mptitle
-            title: channel.name
-            anchors { left: parent.left; top: parent.top; right: parent.right; leftMargin: Theme.paddingMedium; topMargin: Theme.paddingMedium; rightMargin: Theme.paddingMedium }
-        }
-
-        MediaPlayerPopup { id: mppopup; anchors.centerIn: parent }
-
-        MouseArea
-        {
+        Rectangle {
+            id: errorRectangle
             anchors.fill: parent
+            color: Theme.rgba(Theme.overlayBackgroundColor, Theme.opacityOverlay)
+            visible: video.haveError
 
-            onClicked: {
-                if(mptitle.opacity < 1.0) {
-                    mptitle.restoreOpacity();
-                    return;
-                }
-
-                if(video.playbackState === MediaPlayer.PlayingState) {
-                    video.pause();
-                    mppopup.animatePause();
-                }
-                else if(video.playbackState === MediaPlayer.PausedState) {
-                    video.play();
-                    mppopup.animatePlay();
-                }
+            Label {
+                anchors.fill: parent
+                font.pixelSize: Theme.fontSizeLarge
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.WordWrap
+                color: Theme.errorColor
+                text: video.errorString
             }
         }
 
-        MediaPlayerError { id: mperror; anchors.fill: parent; errorMessage: video.errorString }
-    }
+        Item {
+            id: overlay
+            property bool active
 
-    CoverActionList /* Media Player Cover Actions */
-    {
-        enabled: (mediaplayerpage.state !== "error")
-        iconBackground: true
+            anchors.fill: parent
+            opacity: active ? 1 : 0
+            enabled: active
 
-        CoverAction
-        {
-            iconSource: video.playbackState === MediaPlayer.PlayingState ? "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
-            onTriggered: video.playbackState === MediaPlayer.PlayingState ? video.pause() : video.play();
+            Behavior on opacity { FadeAnimator {} }
+
+            Timer {
+                id: hideOverlayTimer
+                interval: 2000
+                onTriggered: overlay.active = false
+            }
+            onActiveChanged:
+                if (active && video.isPlaying) hideOverlayTimer.restart()
+
+            Label {
+                y: Theme.paddingLarge
+                x: Theme.horizontalPageMargin
+                width: parent.width - 2*x
+                text: channel.name
+                truncationMode: TruncationMode.Fade
+            }
+
+            IconButton {
+                anchors.centerIn: parent
+                icon.source: 'image://theme/icon-m-' + (video.isPlaying ? 'pause' : 'play')
+                onClicked:
+                    if (video.isPlaying) video.pause()
+                    else video.play()
+            }
         }
 
-        CoverAction
-        {
-            iconSource: "image://theme/icon-cover-cancel"
+        MouseArea {
+            anchors.fill: parent
+            onClicked: overlay.active = !overlay.active
+        }
+
+        BusyIndicator {
+            id: busyIndicator
+            anchors.centerIn: parent
+            running: video.playbackState !== MediaPlayer.PlayingState && (status === MediaPlayer.Loading || status === MediaPlayer.Stalled)
+            size: BusyIndicatorSize.Large
+        }
+    }
+
+    CoverActionList { // Media player cover actions
+        enabled: !video.haveError
+        iconBackground: true
+
+        CoverAction {
+            iconSource: 'image://theme/icon-cover-' + (video.isPlaying ? 'pause' : 'play')
+            onTriggered:
+                if (video.isPlaying) video.pause()
+                else video.play()
+        }
+
+        CoverAction {
+            iconSource: 'image://theme/icon-cover-cancel'
             onTriggered: pageStack.pop()
         }
     }
 
-    CoverActionList /* Media Player Fallback Cover Actions */
-    {
-        enabled: (mediaplayerpage.state === "error")
+    CoverActionList { // Fallback cover actions
+        enabled: video.haveError
         iconBackground: true
 
-        CoverAction
-        {
+        CoverAction {
             iconSource: "image://theme/icon-cover-cancel"
             onTriggered: pageStack.pop()
         }

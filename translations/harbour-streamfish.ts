@@ -2,13 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en">
 <context>
-    <name>AddPlayListItem</name>
-    <message>
-        <source>Playlist Url</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AddPlaylistPage</name>
     <message>
         <source>Name</source>

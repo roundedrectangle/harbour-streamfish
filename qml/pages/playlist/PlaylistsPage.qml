@@ -3,20 +3,16 @@ import Sailfish.Silica 1.0
 import harbour.streamfish.Model 1.0
 import "../../items/playlist"
 
-Page
-{
+Page {
     id: playlistpage
 
-    SilicaFlickable
-    {
+    SilicaFlickable {
         anchors.fill: parent
 
-        PullDownMenu
-        {
-            MenuItem
-            {
+        PullDownMenu {
+            MenuItem {
                 text: qsTr("Add")
-                onClicked: pageStack.push("AddPlaylistPage.qml", { "context": mainwindow.context } )
+                onClicked: pageStack.push("AddPlaylistPage.qml", {context: mainwindow.context} )
             }
         }
 
@@ -26,8 +22,7 @@ Page
             title: qsTr("Playlists")
         }
 
-        SilicaGridView
-        {
+        SilicaGridView {
             property real spacing: Theme.paddingSmall
 
             id: gvplaylist
@@ -44,11 +39,10 @@ Page
                 height: gvplaylist.cellHeight - gvplaylist.spacing
                 title: playList.name
                 channelsCount: playList.channelsCount
-                onClicked: pageStack.push("ChannelsPage.qml", { "playList": playList })
+                onClicked: pageStack.push("ChannelsPage.qml", {playList: playList})
             }
 
-            ViewPlaceholder
-            {
+            ViewPlaceholder {
                 enabled: gvplaylist.count <= 0
                 text: qsTr("Playlist is empty")
             }

@@ -1,32 +1,28 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 
-BackgroundItem
-{
-    property alias title: lbltitle.text
+BackgroundItem {
+    property alias title: titleLabel.text
     property int channelsCount
 
     id: playlistitem
 
     function tagSurround(s, tag, attributes) {
-        return "<" + tag + " " + (attributes || "") + ">" + s + "</" + tag + ">";
+        return "<" + tag + " " + (attributes || "") + ">" + s + "</" + tag + ">"
     }
 
-    PanelBackground
-    {
+    PanelBackground {
         anchors.fill: parent
         //color: "transparent"
         //border { color: Theme.secondaryHighlightColor; width: 1 }
     }
 
-    Column
-    {
+    Column {
         width: parent.width
         anchors.verticalCenter: parent.verticalCenter
 
-        Label
-        {
-            id: lbltitle
+        Label {
+            id: titleLabel
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignTop
@@ -34,9 +30,7 @@ BackgroundItem
             elide: Text.ElideRight
         }
 
-        Label
-        {
-            id: lblchannelscount
+        Label {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignTop

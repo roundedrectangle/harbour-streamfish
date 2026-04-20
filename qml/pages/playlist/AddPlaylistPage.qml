@@ -2,25 +2,19 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 import harbour.streamfish.PlayList 1.0
 import "../../models"
-import "../../components"
 import "../../js/UrlHelper.js" as UrlHelper
 
-Dialog
-{
+Dialog {
     property Context context
 
-    id: addplaylistpage
-    canAccept: (tfname.text.length > 0) && UrlHelper.isUrl(tfurl.text)
-    onAccepted: context.manager.add(tfname.text, tfurl.text)
+    canAccept: (nameField.text.length > 0) && UrlHelper.isUrl(urlField.text)
+    onAccepted: context.manager.add(nameField.text, urlField.text)
 
-    SilicaFlickable
-    {
-        id: flickable
+    SilicaFlickable {
         anchors.fill: parent
         contentHeight: content.height
 
-        Column
-        {
+        Column {
             id: content
             width: parent.width
 
@@ -28,37 +22,25 @@ Dialog
                 acceptText: qsTr("Add")
             }
 
-            TextField
-            {
-                id: tfname
+            TextField {
+                id: nameField
                 width: parent.width
                 placeholderText: qsTr("Name")
             }
 
-            Row
-            {
+            TextField {
+                id: urlField
                 width: parent.width
-                height: Theme.itemSizeSmall
+                labelVisible: false
+                placeholderText: qsTr("Url")
+                inputMethodHints: Qt.ImhUrlCharactersOnly
 
-                TextField
-                {
-                    id: tfurl
-                    width: parent.width - imgpaste.width
-                    labelVisible: false
-                    placeholderText: qsTr("Url")
-                    inputMethodHints: Qt.ImhUrlCharactersOnly
-                }
+                rightItem: IconButton {
+                    onClicked: urlField.text = Clipboard.text
 
-                ImageButton
-                {
-                    id: imgpaste
-                    source: "image://theme/icon-m-clipboard"
-                    width: parent.height
-                    height: parent.height
-
-                    onClicked: {
-                        tfurl.text = Clipboard.text;
-                    }
+                    width: icon.width
+                    height: icon.height
+                    icon.source: "image://theme/icon-m-clipboard"
                 }
             }
         }

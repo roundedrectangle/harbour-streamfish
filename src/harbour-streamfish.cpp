@@ -6,8 +6,7 @@
 #include "model/m3uchannelsmodel.h"
 #include "model/m3ufilteredchannelsmodel.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QScopedPointer<QGuiApplication> application(SailfishApp::application(argc, argv));
     application->setOrganizationDomain("io.github.roundedrectangle");
     application->setOrganizationName("io.github.roundedrectangle");

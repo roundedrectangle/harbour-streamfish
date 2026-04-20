@@ -49,18 +49,12 @@ TRANSLATIONS += translations/harbour-streamfish-ru.ts \
 DISTFILES += \
     qml/pages/playlist/AddPlaylistPage.qml \
     qml/models/AddedPlayListModel.qml \
-    qml/items/playlist/AddPlayListItem.qml \
-    qml/components/ImageButton.qml \
     qml/models/Context.qml \
     qml/items/playlist/PlayListItem.qml \
     qml/pages/playlist/ChannelsPage.qml \
     qml/pages/playlist/PlaylistsPage.qml \
     qml/items/playlist/ChannelItem.qml \
     qml/pages/mediaplayer/MediaPlayerPage.qml \
-    qml/components/mediaplayer/MediaPlayerTitle.qml \
-    qml/components/mediaplayer/MediaPlayerItem.qml \
-    qml/components/mediaplayer/MediaPlayerError.qml \
-    qml/components/mediaplayer/MediaPlayerPopup.qml \
     qml/items/playlist/ChannelLogo.qml \
     qml/js/UrlHelper.js \
     qml/js/TagParser.js

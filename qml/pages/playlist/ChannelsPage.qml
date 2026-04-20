@@ -44,7 +44,7 @@ Page
                 width: parent.width
                 contentHeight: Theme.itemSizeSmall
                 title: channel.name
-                logo: channel.logo
+                logoUrl: channel.logo
                 onClicked: pageStack.replace("../mediaplayer/MediaPlayerPage.qml", { "channel": channel })
             }
         }

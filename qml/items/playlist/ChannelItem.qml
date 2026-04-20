@@ -2,32 +2,26 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "../../js/TagParser.js" as TagParser
 
-ListItem
-{
+ListItem {
     property string title
-    property alias logo: imgchannel.logoUrl
+    property alias logoUrl: logo.logoUrl
 
-    id: channelitem
-
-    Row
-    {
-        anchors { fill: parent; leftMargin: Theme.paddingSmall; rightMargin: Theme.paddingSmall }
+    Row {
+        x: Theme.paddingSmall
+        width: parent.width - 2*x
         spacing: Theme.paddingMedium
 
-        ChannelLogo
-        {
-            id: imgchannel
+        ChannelLogo {
+            id: logo
             anchors.verticalCenter: parent.verticalCenter
             height: Theme.iconSizeSmall
             contentWidth: Theme.iconSizeSmall
         }
 
-        Label
-        {
-            id: lbltitle
+        Label {
             text: TagParser.parse(title)
             height: parent.height
-            width: parent.width - imgchannel.width
+            width: parent.width - logo.width
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight

@@ -2,27 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru">
 <context>
-    <name>AddPlayListItem</name>
-    <message>
-        <location filename="../qml/items/playlist/AddPlayListItem.qml" line="20"/>
-        <source>Playlist Url</source>
-        <translation>Ссылка на плейлист</translation>
-    </message>
-</context>
-<context>
     <name>AddPlaylistPage</name>
     <message>
-        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="28"/>
+        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="23"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="35"/>
+        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="29"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="48"/>
+        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="36"/>
         <source>Url</source>
         <translation>Ссылка</translation>
     </message>
@@ -60,7 +52,7 @@
 <context>
     <name>PlayListItem</name>
     <message numerus="yes">
-        <location filename="../qml/items/playlist/PlayListItem.qml" line="45"/>
+        <location filename="../qml/items/playlist/PlayListItem.qml" line="39"/>
         <source>%Ln channels</source>
         <translation type="unfinished">
             <numerusform>%Ln канал</numerusform>
@@ -72,17 +64,17 @@
 <context>
     <name>PlaylistsPage</name>
     <message>
-        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="18"/>
+        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="14"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="26"/>
+        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="22"/>
         <source>Playlists</source>
         <translation>Плейлисты</translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="53"/>
+        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="47"/>
         <source>Playlist is empty</source>
         <translation>Плейлист пуст</translation>
     </message>
