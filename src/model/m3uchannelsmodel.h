@@ -4,30 +4,29 @@
 #include <QAbstractListModel>
 #include "../playlist/m3u/m3uplaylist.h"
 
-class M3UChannelsModel : public QAbstractListModel
-{
+class M3UChannelsModel : public QAbstractListModel {
     Q_OBJECT
 
-    Q_PROPERTY(M3UPlayList* playList READ playList WRITE setPlayList NOTIFY playListChanged)
+    Q_PROPERTY(M3UPlayList* playlist MEMBER playlist WRITE setPlaylist NOTIFY playlistChanged)
 
-    public:
-         enum { ChannelRole = Qt::UserRole };
+public:
+    enum { ChannelRole = Qt::DisplayRole };
 
-    public:
-        explicit M3UChannelsModel(QObject *parent = 0);
-        M3UPlayList* playList() const;
-        void setPlayList(M3UPlayList* playlist);
+    explicit M3UChannelsModel(QObject *parent = nullptr);
+    void setPlaylist(M3UPlayList* playlist);
 
-    public:
-        virtual QVariant data(const QModelIndex &index, int role) const;
-        virtual int rowCount(const QModelIndex &) const;
-        virtual QHash<int, QByteArray> roleNames() const;
+    friend class M3UFilteredChannelsModel;
 
-    signals:
-        void playListChanged();
+public:
+    virtual QVariant data(const QModelIndex &index, int role) const;
+    virtual int rowCount(const QModelIndex &) const;
+    virtual QHash<int, QByteArray> roleNames() const;
 
-    private:
-        M3UPlayList* _playlist;
+signals:
+    void playlistChanged();
+
+private:
+    M3UPlayList* playlist = nullptr;
 };
 
 #endif // M3UCHANNELSMODEL_H

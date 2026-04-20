@@ -4,30 +4,28 @@
 #include <QSortFilterProxyModel>
 #include "m3uchannelsmodel.h"
 
-class M3UFilteredChannelsModel : public QSortFilterProxyModel
-{
+class M3UFilteredChannelsModel : public QSortFilterProxyModel {
     Q_OBJECT
 
-    Q_PROPERTY(M3UPlayList* playList READ playList WRITE setPlayList NOTIFY playListChanged)
-    Q_PROPERTY(QString filter READ filter WRITE setFilter NOTIFY filterChanged)
+    Q_PROPERTY(M3UPlayList* playList READ playlist WRITE setPlay;ist NOTIFY playListChanged)
+    Q_PROPERTY(QString filter MEMBER filter WRITE setFilter NOTIFY filterChanged)
 
-    public:
-        explicit M3UFilteredChannelsModel(QObject *parent = 0);
-        M3UPlayList* playList() const;
-        void setPlayList(M3UPlayList* playlist);
-        const QString& filter() const;
-        void setFilter(const QString& filter);
+public:
+    explicit M3UFilteredChannelsModel(QObject *parent = nullptr);
+    M3UPlayList* playlist() const;
+    void setPlaylist(M3UPlayList* playlist);
+    void setFilter(const QString& filter);
 
-    protected:
-        virtual bool filterAcceptsRow(int source_row, const QModelIndex &) const;
+protected:
+    virtual bool filterAcceptsRow(int source_row, const QModelIndex &) const;
 
-    signals:
-        void playListChanged();
-        void filterChanged();
+signals:
+    void playlistChanged();
+    void filterChanged();
 
-    private:
-        M3UChannelsModel* _channelsmodel;
-        QString _filter;
+private:
+    M3UChannelsModel* channelsModel;
+    QString filter;
 };
 
 #endif // M3UFILTEREDCHANNELSMODEL_H

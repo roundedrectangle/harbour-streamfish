@@ -1,49 +1,34 @@
 #include "m3uchannelsmodel.h"
 
-M3UChannelsModel::M3UChannelsModel(QObject *parent) : QAbstractListModel(parent), _playlist(NULL)
-{
+M3UChannelsModel::M3UChannelsModel(QObject *parent) : QAbstractListModel(parent) {}
 
-}
-
-M3UPlayList *M3UChannelsModel::playList() const
-{
-    return this->_playlist;
-}
-
-void M3UChannelsModel::setPlayList(M3UPlayList *playlist)
-{
-    if(this->_playlist == playlist)
+void M3UChannelsModel::setPlaylist(M3UPlayList *playlist) {
+    if(this->playlist == playlist)
         return;
 
-    this->_playlist = playlist;
+    this->playlist = playlist;
 
-    if(this->_playlist)
-        this->_playlist->load();
+    if (this->playlist)
+        this->playlist->load();
 
-    emit playListChanged();
+    emit playlistChanged();
 }
 
-QVariant M3UChannelsModel::data(const QModelIndex &index, int role) const
-{
-    if(!this->_playlist || (role != M3UChannelsModel::ChannelRole))
-        return QVariant();
+QVariant M3UChannelsModel::data(const QModelIndex &index, int role) const {
+    if(playlist && role == M3UChannelsModel::ChannelRole)
+        return QVariant::fromValue(playlist->channelAt(index.row()));
 
-    return QVariant::fromValue(this->_playlist->channelAt(index.row()));
+    return QVariant();
 }
 
-int M3UChannelsModel::rowCount(const QModelIndex &) const
-{
-    if(!this->_playlist)
+int M3UChannelsModel::rowCount(const QModelIndex &) const {
+    if (!playlist)
         return 0;
 
-    return this->_playlist->channelsCount();
+    return playlist->channelsCount();
 }
 
-QHash<int, QByteArray> M3UChannelsModel::roleNames() const
-{
-    QHash<int, QByteArray> roles;
-    roles[M3UChannelsModel::ChannelRole] = "channel";
-
-    return roles;
+QHash<int, QByteArray> M3UChannelsModel::roleNames() const {
+    return {{ChannelRole, "channel"}};
 }
 

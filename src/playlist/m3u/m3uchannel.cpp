@@ -1,7 +1,6 @@
 #include "m3uchannel.h"
 
-M3UChannel::M3UChannel(const QString &name, const QUrl url, const QString &logo, QObject *parent) : QObject(parent), _name(name), _logo(logo), _url(url)
-{
+M3UChannel::M3UChannel(const QString &name, const QUrl url, const QString &logo, QObject *parent) : QObject(parent), _name(name), _logo(logo), _url(url) {
 
 }
 
