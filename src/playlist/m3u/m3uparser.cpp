@@ -3,73 +3,58 @@
 #include <QStringList>
 #include <QDebug>
 
-M3UParser::M3UParser(QObject *parent): QObject(parent)
-{
+M3UParser::M3UParser(QObject *parent): QObject(parent) {}
 
+const QString &M3UParser::getLastError() const {
+    return this->lastError;
 }
 
-const QString &M3UParser::lastError() const
-{
-    return this->_lasterror;
-}
+bool M3UParser::parse(const QString &data, QList<M3UChannel*> &channels, QObject *owner) {
+    QStringList lines = data.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts);
+    QRegularExpression channelNameRegex("#EXTINF:[^,]+?,(.+)");
+    QRegularExpression channelLogoRegex("tvg-logo=\"([^\"]+)\"");
+    bool extInfoDone = false;
 
-bool M3UParser::parse(const QString &m3udata, QList<M3UChannel *> &channels, QObject* owner)
-{
-    QStringList lines = m3udata.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts);
-    QRegularExpression channelnamergx("#EXTINF:[^,]+?,(.+)");
-    QRegularExpression channellogorgx("tvg-logo=\"([^\"]+)\"");
-    bool extinfdone = false;
-
-    for(int i = 0 ; i < lines.length(); i++)
-    {
+    for (int i = 0; i < lines.length(); i++) {
         QString line = lines[i].trimmed();
 
-        if(line == "#EXTM3U") // Skip header, if any
+        if (line == "#EXTM3U") // Skip header, if any
             continue;
 
-        if(line.startsWith("#EXTINF"))
-        {
-            if(extinfdone)
-            {
-                this->warning(tr("Malformed M3U playlist, skipping line %1"), i, extinfdone);
+        if (line.startsWith("#EXTINF")) {
+            if (extInfoDone) {
+                this->warning(tr("Malformed M3U playlist, skipping line %1"), i, extInfoDone);
                 continue;
             }
 
-            QRegularExpressionMatch m1 = channelnamergx.match(line);
-            QRegularExpressionMatch m2 = channellogorgx.match(line);
-            channels.append(new M3UChannel(m1.captured(1), QString(), m2.captured(1), owner));
-            extinfdone = true;
-        }
-        else
-        {
-            if(line.startsWith("#"))
+            channels.append(new M3UChannel(channelNameRegex.match(line).captured(1), QString(), channelLogoRegex.match(line).captured(1), owner));
+            extInfoDone = true;
+        } else {
+            if (line.startsWith("#"))
                 continue;
 
-            if(!extinfdone)
-            {
-                this->warning(tr("Malformed M3U playlist, skipping line %1"), i, extinfdone);
+            if (!extInfoDone) {
+                this->warning(tr("Malformed M3U playlist, skipping line %1"), i, extInfoDone);
                 continue;
             }
 
             channels.last()->setUrl(line);
-            extinfdone = false;
+            extInfoDone = false;
         }
     }
 
-    if(channels.isEmpty())
+    if (channels.isEmpty())
         return this->error(tr("Invalid M3U playlist"));
 
     return true;
 }
 
-bool M3UParser::error(const QString &errmsg)
-{
-    this->_lasterror = errmsg;
+bool M3UParser::error(const QString &message) {
+    this->lastError = message;
     return false;
 }
 
-void M3UParser::warning(const QString &errmsg, int line, bool& extinfdone)
-{
-    qWarning() << QString(errmsg).arg(line);
-    extinfdone = !extinfdone;
+void M3UParser::warning(const QString &message, int line, bool &extInfoDone) {
+    qWarning() << QString(message).arg(line);
+    extInfoDone = !extInfoDone;
 }

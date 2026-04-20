@@ -99,7 +99,7 @@ void M3UPlayList::handleDownloadFinished() {
 
     if (!m3uparser.parse(m3udata, this->channels, this)) {
         this->channels.clear(); // Invalid playlist, delete all items
-        emit error(m3uparser.lastError());
+        emit error(m3uparser.getLastError());
     } else {
         this->isLoaded = true;
         emit loaded();

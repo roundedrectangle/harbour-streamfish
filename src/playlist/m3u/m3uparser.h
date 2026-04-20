@@ -5,21 +5,20 @@
 #include <QString>
 #include "m3uchannel.h"
 
-class M3UParser: public QObject
-{
+class M3UParser: public QObject {
     Q_OBJECT
 
-    public:
-        M3UParser(QObject* parent = 0);
-        const QString& lastError() const;
-        bool parse(const QString& m3udata, QList<M3UChannel*>& channels, QObject *owner);
+public:
+    M3UParser(QObject *parent = nullptr);
+    const QString &getLastError() const;
+    bool parse(const QString &data, QList<M3UChannel*> &channels, QObject *owner);
 
-    private:
-        bool error(const QString& errmsg);
-        void warning(const QString& errmsg, int line, bool &extinfdone);
+private:
+    bool error(const QString &message);
+    void warning(const QString &message, int line, bool &extInfoDone);
 
-    private:
-        QString _lasterror;
+private:
+    QString lastError;
 };
 
 #endif // M3UPARSER_H
