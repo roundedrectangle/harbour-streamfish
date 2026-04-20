@@ -17,8 +17,7 @@ Page {
         }
 
         PageHeader {
-            id: pageheader
-            anchors { left: parent.left; top: parent.top; right: parent.right }
+            id: header
             title: qsTr("Playlists")
         }
 
@@ -26,8 +25,12 @@ Page {
             property real spacing: Theme.paddingSmall
 
             id: gvplaylist
-            anchors { left: parent.left; top: pageheader.bottom; right: parent.right; bottom: parent.bottom; leftMargin: gvplaylist.spacing }
-            cellWidth: Screen.width / 3
+            width: parent.width
+            anchors {
+                top: header.bottom
+                bottom: parent.bottom
+            }
+            cellWidth: Math.min(width, height) / 3
             cellHeight: cellWidth
 
             model: M3UPlayListsModel {
@@ -35,8 +38,6 @@ Page {
             }
 
             delegate: PlayListItem {
-                width: gvplaylist.cellWidth - gvplaylist.spacing
-                height: gvplaylist.cellHeight - gvplaylist.spacing
                 title: playList.name
                 channelsCount: playList.channelsCount
                 onClicked: pageStack.push("ChannelsPage.qml", {playList: playList})

@@ -3,41 +3,37 @@ import Sailfish.Silica 1.0
 import harbour.streamfish.Model 1.0
 import "../../items/playlist"
 
-Page
-{
-    property var playList
+Page {
+    property alias playList: channelsModel.playList
 
-    id: channelspage
-
-    SilicaFlickable
-    {
+    SilicaFlickable {
         anchors.fill: parent
 
-        PageHeader
-        {
-            id: pageheader
+        PageHeader {
+            id: header
             title: qsTr("Channels")
             anchors { left: parent.left; top: parent.top; right: parent.right }
         }
 
         SearchField {
-            id: searchfield
-            anchors { left: parent.left; top: pageheader.bottom; right: parent.right }
+            id: searchField
+            width: parent.width
+            anchors.top: header.bottom
             inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
             labelVisible: false
-            width: parent.width
         }
 
-        SilicaListView
-        {
-            id: lvchannels
-            anchors { left: parent.left; top: searchfield.bottom; right: parent.right; bottom: parent.bottom }
+        SilicaListView {
+            width: parent.width
+            anchors {
+                top: searchField.bottom
+                bottom: parent.bottom
+            }
             clip: true
 
             model: M3UFilteredChannelsModel {
-                id: channelsmodel
-                playList: channelspage.playList
-                filter: searchfield.text
+                id: channelsModel
+                filter: searchField.text
             }
 
             delegate: ChannelItem {
@@ -45,7 +41,7 @@ Page
                 contentHeight: Theme.itemSizeSmall
                 title: channel.name
                 logoUrl: channel.logo
-                onClicked: pageStack.replace("../mediaplayer/MediaPlayerPage.qml", { "channel": channel })
+                onClicked: pageStack.replace("../mediaplayer/MediaPlayerPage.qml", {channel: channel})
             }
         }
     }

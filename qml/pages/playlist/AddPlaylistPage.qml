@@ -32,7 +32,7 @@ Dialog {
                 id: urlField
                 width: parent.width
                 labelVisible: false
-                placeholderText: qsTr("Url")
+                placeholderText: qsTr("URL")
                 inputMethodHints: Qt.ImhUrlCharactersOnly
             }
         }
