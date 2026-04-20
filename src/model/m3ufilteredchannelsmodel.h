@@ -7,7 +7,7 @@
 class M3UFilteredChannelsModel : public QSortFilterProxyModel {
     Q_OBJECT
 
-    Q_PROPERTY(M3UPlayList* playList READ playlist WRITE setPlay;ist NOTIFY playListChanged)
+    Q_PROPERTY(M3UPlayList* playList READ playlist WRITE setPlaylist NOTIFY playlistChanged)
     Q_PROPERTY(QString filter MEMBER filter WRITE setFilter NOTIFY filterChanged)
 
 public:
