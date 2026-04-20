@@ -34,14 +34,6 @@ Dialog {
                 labelVisible: false
                 placeholderText: qsTr("Url")
                 inputMethodHints: Qt.ImhUrlCharactersOnly
-
-                rightItem: IconButton {
-                    onClicked: urlField.text = Clipboard.text
-
-                    width: icon.width
-                    height: icon.height
-                    icon.source: "image://theme/icon-m-clipboard"
-                }
             }
         }
     }
