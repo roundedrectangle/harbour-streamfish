@@ -4,15 +4,13 @@ import harbour.streamfish.Model 1.0
 import "../../items/playlist"
 
 Page {
-    id: playlistpage
-
     SilicaFlickable {
         anchors.fill: parent
 
         PullDownMenu {
             MenuItem {
                 text: qsTr("Add")
-                onClicked: pageStack.push("AddPlaylistPage.qml", {context: mainwindow.context} )
+                onClicked: pageStack.push("AddPlaylistPage.qml")
             }
         }
 
@@ -33,14 +31,12 @@ Page {
             cellWidth: Math.min(width, height) / 3
             cellHeight: cellWidth
 
-            model: M3UPlayListsModel {
-                manager: mainwindow.context.manager
-            }
+            model: playlistsModel
 
             delegate: PlayListItem {
-                title: playList.name
-                channelsCount: playList.channelsCount
-                onClicked: pageStack.push("ChannelsPage.qml", {playList: playList})
+                title: playlist.name
+                channelsCount: playlist.channelsCount
+                onClicked: pageStack.push("ChannelsPage.qml", {playlist: playlist})
             }
 
             ViewPlaceholder {

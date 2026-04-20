@@ -8,11 +8,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Url</source>
+        <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add</source>
+        <source>URL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -49,6 +49,10 @@
             <numerusform>%Ln channel</numerusform>
             <numerusform>%Ln channels</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

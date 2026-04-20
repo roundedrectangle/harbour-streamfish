@@ -4,7 +4,12 @@ import harbour.streamfish.Model 1.0
 import "../../items/playlist"
 
 Page {
-    property alias playList: channelsModel.playList
+    property alias playlist: channelsModel.playList
+
+    Connections {
+        target: playlist
+        Component.onDestruction: pageStack.pop()
+    }
 
     SilicaFlickable {
         anchors.fill: parent

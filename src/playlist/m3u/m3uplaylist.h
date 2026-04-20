@@ -15,8 +15,8 @@ class M3UPlayList : public QObject
     Q_PROPERTY(int channelsCount READ channelsCount NOTIFY channelsCountChanged)
 
     public:
-        explicit M3UPlayList(const QString& name, const QUrl& url, QObject *parent = 0);
-        explicit M3UPlayList(const QString& name, const QUrl& url, const QString& file, int count, QObject *parent = 0);
+        explicit M3UPlayList(const QString& name, const QUrl& url, QObject *parent = nullptr);
+        explicit M3UPlayList(const QString& name, const QUrl& url, const QString& file, int count, QObject *parent = nullptr);
         const QString& name() const;
         const QString& file() const;
         const QUrl& url() const;

@@ -5,6 +5,12 @@ GridItem {
     property alias title: titleLabel.text
     property int channelsCount
 
+    function remove() {
+        remorseDelete(function() {
+            //TODO
+        })
+    }
+
     // SPDX-FileCopyrightText: 2016 - 2019 Jolla Ltd.
     // SPDX-FileCopyrightText: 2025 Jolla Mobile Ltd
     //
@@ -45,6 +51,15 @@ GridItem {
             color: Theme.secondaryColor
             wrapMode: Text.Wrap
             text: qsTr("%Ln channels", '', channelsCount)
+        }
+    }
+
+    menu: Component {
+        ContextMenu {
+            MenuItem {
+                text: qsTr("Remove")
+                onClicked: remove()
+            }
         }
     }
 }

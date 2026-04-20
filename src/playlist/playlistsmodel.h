@@ -1,42 +1,41 @@
-#ifndef PLAYLISTSTORAGE_H
-#define PLAYLISTSTORAGE_H
+#ifndef PLAYLISTSMODEL_H
+#define PLAYLISTSMODEL_H
 
-#include <QObject>
+#include <QAbstractListModel>
 #include "m3u/m3uplaylist.h"
 
-class PlayListStorage : public QObject
-{
+class PlaylistsModel : public QAbstractListModel {
     Q_OBJECT
 
-    public:
-        explicit PlayListStorage(const QString& configpath, QObject *parent = 0);
-        int playListCount() const;
-        M3UPlayList* playListAt(int idx) const;
-        void download(M3UPlayList* playlist);
-        void load();
+public:
+    explicit PlaylistsModel(QObject *parent = nullptr);
+    int playListCount() const;
+    M3UPlayList* playListAt(int idx) const;
 
-    private:
-        void initFolder(const QString& configpath, const QString& pathname, QString& destpath);
-        void readFile(const QString& infile, QByteArray& data);
-        QString playlistPath() const;
-        QString playlistFile() const;
-        void updateToFile() const;
+    Q_INVOKABLE void load();
+    Q_INVOKABLE void add(const QString &name, const QString &url);
 
-    private slots:
-        void onPlayListError(const QString &errmsg);
-        void onPlayListLoaded();
+    enum PlaylistRole { RolePlaylist };
 
-    private:
-        QList<M3UPlayList*> _playlists;
-        QString _plpath;
+    virtual QVariant data(const QModelIndex &index, int role) const;
+    virtual int rowCount(const QModelIndex &) const;
+    virtual QHash<int, QByteArray> roleNames() const;
 
-    signals:
-        void playListAdded();
-        void playListRemoved();
+private:
+    QString playlistsFilePath() const;
+    void save() const;
 
-    private:
-        static const QString PLAYLISTS_PATH;
-        static const QString VERSION;
+private slots:
+    void onPlayListError(const QString &errmsg);
+    void onPlayListLoaded();
+
+private:
+    QList<M3UPlayList*> playlists;
+    QString playlistsPath;
+
+private:
+    static const QString PLAYLISTS_PATH;
+    static const QString VERSION;
 };
 
-#endif // PLAYLISTSTORAGE_H
+#endif // PLAYLISTSMODEL_H

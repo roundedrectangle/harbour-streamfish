@@ -4,17 +4,17 @@
 <context>
     <name>AddPlaylistPage</name>
     <message>
-        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="29"/>
+        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="24"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="36"/>
-        <source>Url</source>
-        <translation>Url</translation>
+        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="31"/>
+        <source>URL</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="23"/>
+        <location filename="../qml/pages/playlist/AddPlaylistPage.qml" line="18"/>
         <source>Add</source>
         <translation>Aggiungi</translation>
     </message>
@@ -52,28 +52,33 @@
 <context>
     <name>PlayListItem</name>
     <message numerus="yes">
-        <location filename="../qml/items/playlist/PlayListItem.qml" line="39"/>
+        <location filename="../qml/items/playlist/PlayListItem.qml" line="53"/>
         <source>%Ln channels</source>
         <translation>
             <numerusform>%Ln canale</numerusform>
             <numerusform>%Ln canali</numerusform>
         </translation>
     </message>
+    <message>
+        <location filename="../qml/items/playlist/PlayListItem.qml" line="60"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlaylistsPage</name>
     <message>
-        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="22"/>
+        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="19"/>
         <source>Playlists</source>
         <translation>Scalette</translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="47"/>
+        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="44"/>
         <source>Playlist is empty</source>
         <translation>La scaletta è vuota</translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="14"/>
+        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="12"/>
         <source>Add</source>
         <translation>Aggiungi</translation>
     </message>

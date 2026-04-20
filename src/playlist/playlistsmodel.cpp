@@ -1,4 +1,4 @@
-#include "playliststorage.h"
+#include "playlistsmodel.h"
 #include <QCryptographicHash>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -6,116 +6,134 @@
 #include <QFile>
 #include <QUrl>
 #include <QDir>
+#include <QStandardPaths>
+#include <QRegularExpression>
 
-const QString PlayListStorage::PLAYLISTS_PATH = "playlists";
-const QString PlayListStorage::VERSION = "1.0";
+const QString PlaylistsModel::PLAYLISTS_PATH = "playlists";
+const QString PlaylistsModel::VERSION = "1.0";
 
-PlayListStorage::PlayListStorage(const QString &configpath, QObject *parent) : QObject(parent)
-{
-    this->initFolder(configpath, PlayListStorage::PLAYLISTS_PATH, this->_plpath);
+// TODO: removing playlists
+
+PlaylistsModel::PlaylistsModel(QObject *parent) : QAbstractListModel(parent) {
+    this->playlistsPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QDir::separator() + PlaylistsModel::PLAYLISTS_PATH + QDir::separator();
+    QDir().mkpath(this->playlistsPath);
+
+    load();
 }
 
-int PlayListStorage::playListCount() const
-{
-    return this->_playlists.count();
+int PlaylistsModel::playListCount() const {
+    return this->playlists.count();
 }
 
-M3UPlayList *PlayListStorage::playListAt(int idx) const
-{
-    return this->_playlists.at(idx);
+M3UPlayList *PlaylistsModel::playListAt(int idx) const {
+    return this->playlists.at(idx);
 }
 
-void PlayListStorage::download(M3UPlayList *playlist)
-{
-    connect(playlist, &M3UPlayList::loaded, this, &PlayListStorage::onPlayListLoaded);
-    connect(playlist, &M3UPlayList::error, this, &PlayListStorage::onPlayListError);
+QJsonDocument readJsonFile(const QString &path) {
+    QFile f(path);
+    if (!f.open(QFile::ReadOnly)) {
+        qWarning() << "Couldn't open file for reading" << path;
+        return QJsonDocument();
+    }
+
+    const QJsonDocument doc = QJsonDocument::fromJson(f.readAll());
+    f.close();
+    return doc;
+}
+
+void writeJsonFile(const QJsonDocument &doc, const QString &path) {
+    QFile f(path);
+    if (!f.open(QFile::WriteOnly)) {
+        qWarning() << "Couldn't open file for writing" << path;
+        return;
+    }
+
+    f.write(doc.toJson());
+    f.close();
+}
+
+void PlaylistsModel::load() {
+    qDebug() << "Loading playlists";
+
+    QJsonDocument doc = readJsonFile(playlistsFilePath());
+    if (doc.isNull()) {
+        qWarning("Couldn't read playlists file");
+        return;
+    }
+
+    QJsonArray playlists = doc.object()["playlists"].toArray();
+    for (const QJsonValue &playlistValue : playlists) {
+        QJsonObject playlist = playlistValue.toObject();
+        this->playlists.append(new M3UPlayList(playlist["name"].toString(), QUrl(playlist["url"].toString()), playlist["file"].toString(), playlist["count"].toInt(), this));
+    }
+}
+
+QString PlaylistsModel::playlistsFilePath() const {
+    return playlistsPath + PlaylistsModel::PLAYLISTS_PATH + ".json";
+}
+
+void PlaylistsModel::save() const {
+    QVariantList newPlaylists;
+    for (const M3UPlayList* playlist : this->playlists) {
+        newPlaylists.append(QVariantMap{
+                                {"name", playlist->name()},
+                                {"count", playlist->channelsCount()},
+                                {"file", playlistsPath + playlist->file()},
+                                {"url", playlist->url().toString()},
+                            });
+    }
+
+    const QVariantMap data{
+        {"version", PlaylistsModel::VERSION},
+        {"playlists", newPlaylists}
+    };
+    writeJsonFile(QJsonDocument::fromVariant(data), playlistsFilePath());
+}
+
+void PlaylistsModel::onPlayListError(const QString &errmsg) {
+    qWarning() << "ERROR:" << errmsg;
+}
+
+void PlaylistsModel::onPlayListLoaded() {
+    M3UPlayList* playlist = qobject_cast<M3UPlayList*>(this->sender());
+
+    const int i = playlists.size();
+    beginInsertRows(QModelIndex(), i, i);
+
+    this->playlists.append(playlist);
+    playlist->save(playlistsPath);
+    this->save();
+
+    endInsertRows();
+}
+
+void PlaylistsModel::add(const QString &name, const QString &url) {
+    QString newUrl = url;
+
+    if(url.indexOf(QRegularExpression("^([^:]+)://")) == -1) // Fallback to HTTP
+        newUrl.prepend("http://");
+
+    M3UPlayList* playlist = new M3UPlayList(name, QUrl(newUrl), this);
+
+    connect(playlist, &M3UPlayList::loaded, this, &PlaylistsModel::onPlayListLoaded);
+    connect(playlist, &M3UPlayList::error, this, &PlaylistsModel::onPlayListError);
 
     playlist->download();
 }
 
-void PlayListStorage::load()
-{
-    QByteArray pldata;
-    this->readFile(this->playlistFile(), pldata);
 
-    QJsonDocument jsdoc = QJsonDocument::fromJson(pldata);
-    QJsonObject obj = jsdoc.object();
-    QJsonArray playlists = obj["playlists"].toArray();
+QVariant PlaylistsModel::data(const QModelIndex &index, int role) const {
+    int i = index.row();
+    if (i >= 0 && i < playlists.size() && role == RolePlaylist)
+        return QVariant::fromValue(playlists.at(i));
 
-    foreach(QJsonValue plitem, playlists)
-    {
-        QJsonObject plobj = plitem.toObject();
-        M3UPlayList* playlist = new M3UPlayList(plobj["name"].toString(), QUrl(plobj["url"].toString()), plobj["file"].toString(), plobj["count"].toInt(), this);
-        this->_playlists.append(playlist);
-    }
+    return QVariant();
 }
 
-void PlayListStorage::initFolder(const QString &configpath, const QString &pathname, QString &destpath)
-{
-    destpath = configpath + QDir::separator() + pathname;
-
-    QDir dir;
-    dir.mkpath(destpath);
+int PlaylistsModel::rowCount(const QModelIndex &) const {
+    return playlists.size();
 }
 
-void PlayListStorage::readFile(const QString &infile, QByteArray &data)
-{
-    QFile f(infile);
-    f.open(QFile::ReadOnly);
-    data = f.readAll();
-    f.close();
-}
-
-QString PlayListStorage::playlistPath() const
-{
-    return this->_plpath + QDir::separator();
-}
-
-QString PlayListStorage::playlistFile() const
-{
-    return this->_plpath + QDir::separator() + PlayListStorage::PLAYLISTS_PATH + ".json";
-}
-
-void PlayListStorage::updateToFile() const
-{
-    QJsonObject jsobj;
-    QJsonArray jspl;
-
-    foreach(const M3UPlayList* playlist, this->_playlists)
-    {
-        QJsonObject jsitem;
-        jsitem["name"] = playlist->name();
-        jsitem["count"] = playlist->channelsCount();
-        jsitem["file"] = this->playlistPath() + QDir::separator() + playlist->file();
-        jsitem["url"] = playlist->url().toString();
-
-        jspl.append(jsitem);
-    }
-
-    jsobj["version"] = PlayListStorage::VERSION;
-    jsobj["playlists"] = jspl;
-
-    QJsonDocument jsdoc;
-    jsdoc.setObject(jsobj);
-
-    QFile f(this->playlistFile());
-    f.open(QFile::WriteOnly);
-    f.write(jsdoc.toJson());
-    f.close();
-}
-
-void PlayListStorage::onPlayListError(const QString &errmsg)
-{
-    qWarning() << "ERROR:" << errmsg;
-}
-
-void PlayListStorage::onPlayListLoaded()
-{
-    M3UPlayList* playlist = qobject_cast<M3UPlayList*>(this->sender());
-
-    this->_playlists.append(playlist);
-    playlist->save(this->playlistPath());
-    this->updateToFile();
-
-    emit playListAdded();
+QHash<int, QByteArray> PlaylistsModel::roleNames() const {
+    return {{RolePlaylist, "playlist"}};
 }
