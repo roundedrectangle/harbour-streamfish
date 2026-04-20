@@ -89,7 +89,7 @@ void PlaylistsModel::handlePlaylistLoaded() {
 void PlaylistsModel::add(const QString &name, const QString &url) {
     QString newUrl = url;
 
-    if(url.indexOf(QRegularExpression("^([^:]+)://")) == -1) // Fallback to HTTP
+    if (url.indexOf(QRegularExpression("^([^:]+)://")) == -1) // Fallback to HTTP
         newUrl.prepend("http://");
 
     qDebug() << "Adding playlist" << name << url;

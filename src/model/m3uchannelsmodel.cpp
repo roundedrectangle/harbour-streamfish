@@ -3,7 +3,7 @@
 M3UChannelsModel::M3UChannelsModel(QObject *parent) : QAbstractListModel(parent) {}
 
 void M3UChannelsModel::setPlaylist(M3UPlayList *playlist) {
-    if(this->playlist == playlist)
+    if (this->playlist == playlist)
         return;
 
     this->playlist = playlist;
@@ -15,7 +15,7 @@ void M3UChannelsModel::setPlaylist(M3UPlayList *playlist) {
 }
 
 QVariant M3UChannelsModel::data(const QModelIndex &index, int role) const {
-    if(playlist && role == M3UChannelsModel::ChannelRole)
+    if (playlist && role == M3UChannelsModel::ChannelRole)
         return QVariant::fromValue(playlist->channelAt(index.row()));
 
     return QVariant();

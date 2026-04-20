@@ -26,7 +26,7 @@ const QUrl &M3UChannel::url() const
 
 void M3UChannel::setName(const QString &v)
 {
-    if(this->_name == v)
+    if (this->_name == v)
         return;
 
     this->_name = v;
@@ -35,7 +35,7 @@ void M3UChannel::setName(const QString &v)
 
 void M3UChannel::setLogo(const QString &v)
 {
-    if(this->_logo == v)
+    if (this->_logo == v)
         return;
 
     this->_logo = v;
@@ -44,7 +44,7 @@ void M3UChannel::setLogo(const QString &v)
 
 void M3UChannel::setUrl(const QUrl &v)
 {
-    if(this->_url == v)
+    if (this->_url == v)
         return;
 
     this->_url = v;
