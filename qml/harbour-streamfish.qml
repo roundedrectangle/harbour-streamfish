@@ -1,5 +1,6 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
+import Nemo.Configuration 1.0
 import 'pages'
 
 ApplicationWindow {
@@ -7,6 +8,14 @@ ApplicationWindow {
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
     initialPage: Component { PlaylistsPage {} }
+
+    ConfigurationGroup {
+        id: config
+        path: '/apps/harbour-streamfish'
+
+        property bool replaceChannelsWithPlayer
+        property bool preventDisplayBlanking: true
+    }
 
     Connections {
         target: playlistsModel

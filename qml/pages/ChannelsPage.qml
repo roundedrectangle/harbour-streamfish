@@ -47,7 +47,7 @@ Page {
                 contentHeight: Theme.itemSizeSmall
                 title: channel.name
                 logoUrl: channel.logo
-                onClicked: pageStack.replace("MediaPlayerPage.qml", {channel: channel})
+                onClicked: (config.replaceChannelsWithPlayer ? pageStack.replace : pageStack.push)("MediaPlayerPage.qml", {channel: channel})
             }
         }
     }

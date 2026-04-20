@@ -55,7 +55,8 @@ DISTFILES += \
     qml/pages/MediaPlayerPage.qml \
     qml/items/playlist/ChannelLogo.qml \
     qml/js/UrlHelper.js \
-    qml/js/TagParser.js
+    qml/js/TagParser.js \
+    qml/pages/SettingsPage.qml
 
 HEADERS += \
     src/playlist/playlistsmodel.h \

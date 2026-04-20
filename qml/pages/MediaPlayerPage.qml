@@ -1,6 +1,7 @@
 import QtQuick 2.1
 import QtMultimedia 5.0
 import Sailfish.Silica 1.0
+import Nemo.KeepAlive 1.2
 
 Page {
     id: page
@@ -8,6 +9,11 @@ Page {
     allowedOrientations: Orientation.LandscapeMask
 
     property var channel
+
+    DisplayBlanking {
+        preventBlanking: config.preventDisplayBlanking && video.isPlaying
+        // will automatically disable preventing on destruction
+    }
 
     Video {
         id: video
