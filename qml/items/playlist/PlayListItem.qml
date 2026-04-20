@@ -5,10 +5,10 @@ GridItem {
     property alias title: titleLabel.text
     property int channelsCount
 
+    signal removeRequested
+
     function remove() {
-        remorseDelete(function() {
-            //TODO
-        })
+        remorseDelete(function() { removeRequested() })
     }
 
     // SPDX-FileCopyrightText: 2016 - 2019 Jolla Ltd.

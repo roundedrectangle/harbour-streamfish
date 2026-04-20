@@ -14,6 +14,7 @@ public:
 
     Q_INVOKABLE void load();
     Q_INVOKABLE void add(const QString &name, const QString &url);
+    Q_INVOKABLE void remove(int i);
 
     enum PlaylistRole { RolePlaylist };
 
@@ -21,13 +22,16 @@ public:
     virtual int rowCount(const QModelIndex &) const;
     virtual QHash<int, QByteArray> roleNames() const;
 
+signals:
+    void playlistError(const QString &message);
+
 private:
     QString playlistsFilePath() const;
     void save() const;
 
 private slots:
-    void onPlayListError(const QString &errmsg);
-    void onPlayListLoaded();
+    void handlePlaylistError(const QString &message);
+    void handlePlaylistLoaded();
 
 private:
     QList<M3UPlayList*> playlists;

@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     QQmlContext *context = view.data()->rootContext();
 
     PlaylistsModel *playlistsModel = new PlaylistsModel();
-    view->rootContext()->setContextProperty("playlistsModel", playlistsModel);
+    context->setContextProperty("playlistsModel", playlistsModel);
 
     view->setSource(SailfishApp::pathTo("qml/harbour-streamfish.qml"));
     view->show();

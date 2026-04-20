@@ -20,15 +20,13 @@ Page {
         }
 
         SilicaGridView {
-            property real spacing: Theme.paddingSmall
-
-            id: gvplaylist
+            id: listView
             width: parent.width
             anchors {
                 top: header.bottom
                 bottom: parent.bottom
             }
-            cellWidth: Math.min(width, height) / 3
+            cellWidth: width / Math.floor(width / Theme.itemSizeHuge)
             cellHeight: cellWidth
 
             model: playlistsModel
@@ -37,10 +35,11 @@ Page {
                 title: playlist.name
                 channelsCount: playlist.channelsCount
                 onClicked: pageStack.push("ChannelsPage.qml", {playlist: playlist})
+                onRemoveRequested: playlistsModel.remove(index)
             }
 
             ViewPlaceholder {
-                enabled: gvplaylist.count <= 0
+                enabled: listView.count <= 0
                 text: qsTr("Playlist is empty")
             }
         }

@@ -4,6 +4,7 @@ import harbour.streamfish.Model 1.0
 import "../../items/playlist"
 
 Page {
+    // If the playlist object is deleted while the channels page is open, segemntation fault might happen, but that's very unlikely
     property alias playlist: channelsModel.playList
 
     Connections {

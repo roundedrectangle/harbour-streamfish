@@ -62,7 +62,8 @@ HEADERS += \
     src/playlist/m3u/m3uparser.h \
     src/model/m3uchannelsmodel.h \
     src/playlist/m3u/m3uchannel.h \
-    src/model/m3ufilteredchannelsmodel.h
+    src/model/m3ufilteredchannelsmodel.h \
+    src/utilities.h
 
 RESOURCES += \
     resources.qrc

@@ -8,5 +8,11 @@ ApplicationWindow {
     _defaultPageOrientations: Orientation.All
     initialPage: Component { PlaylistsPage {} }
 
+    Connections {
+        target: playlistsModel
+        onPlaylistError:
+            Notices.show(message)
+    }
+
     cover: pageStack.currentPage.objectName == 'mediaPlayerPage' ? undefined : Qt.resolvedUrl("cover/CoverPage.qml")
 }

@@ -1,4 +1,5 @@
 #include "playlistsmodel.h"
+#include "../utilities.h"
 #include <QCryptographicHash>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -29,29 +30,6 @@ M3UPlayList *PlaylistsModel::playListAt(int idx) const {
     return this->playlists.at(idx);
 }
 
-QJsonDocument readJsonFile(const QString &path) {
-    QFile f(path);
-    if (!f.open(QFile::ReadOnly)) {
-        qWarning() << "Couldn't open file for reading" << path;
-        return QJsonDocument();
-    }
-
-    const QJsonDocument doc = QJsonDocument::fromJson(f.readAll());
-    f.close();
-    return doc;
-}
-
-void writeJsonFile(const QJsonDocument &doc, const QString &path) {
-    QFile f(path);
-    if (!f.open(QFile::WriteOnly)) {
-        qWarning() << "Couldn't open file for writing" << path;
-        return;
-    }
-
-    f.write(doc.toJson());
-    f.close();
-}
-
 void PlaylistsModel::load() {
     qDebug() << "Loading playlists";
 
@@ -74,14 +52,13 @@ QString PlaylistsModel::playlistsFilePath() const {
 
 void PlaylistsModel::save() const {
     QVariantList newPlaylists;
-    for (const M3UPlayList* playlist : this->playlists) {
+    for (const M3UPlayList *playlist : this->playlists)
         newPlaylists.append(QVariantMap{
-                                {"name", playlist->name()},
+                                {"name", playlist->getName()},
                                 {"count", playlist->channelsCount()},
-                                {"file", playlistsPath + playlist->file()},
-                                {"url", playlist->url().toString()},
+                                {"file", playlistsPath + playlist->getPath()},
+                                {"url", playlist->getUrl().toString()},
                             });
-    }
 
     const QVariantMap data{
         {"version", PlaylistsModel::VERSION},
@@ -90,12 +67,14 @@ void PlaylistsModel::save() const {
     writeJsonFile(QJsonDocument::fromVariant(data), playlistsFilePath());
 }
 
-void PlaylistsModel::onPlayListError(const QString &errmsg) {
-    qWarning() << "ERROR:" << errmsg;
+void PlaylistsModel::handlePlaylistError(const QString &message) {
+    qWarning() << "ERROR:" << message;
+    emit playlistError(message);
 }
 
-void PlaylistsModel::onPlayListLoaded() {
+void PlaylistsModel::handlePlaylistLoaded() {
     M3UPlayList* playlist = qobject_cast<M3UPlayList*>(this->sender());
+    qDebug() << "Playlist loaded" << playlist->getName();
 
     const int i = playlists.size();
     beginInsertRows(QModelIndex(), i, i);
@@ -113,12 +92,22 @@ void PlaylistsModel::add(const QString &name, const QString &url) {
     if(url.indexOf(QRegularExpression("^([^:]+)://")) == -1) // Fallback to HTTP
         newUrl.prepend("http://");
 
+    qDebug() << "Adding playlist" << name << url;
     M3UPlayList* playlist = new M3UPlayList(name, QUrl(newUrl), this);
 
-    connect(playlist, &M3UPlayList::loaded, this, &PlaylistsModel::onPlayListLoaded);
-    connect(playlist, &M3UPlayList::error, this, &PlaylistsModel::onPlayListError);
+    connect(playlist, &M3UPlayList::loaded, this, &PlaylistsModel::handlePlaylistLoaded);
+    connect(playlist, &M3UPlayList::error, this, &PlaylistsModel::handlePlaylistError);
 
     playlist->download();
+}
+
+void PlaylistsModel::remove(int i) {
+    if (i >= 0 && i < playlists.count()) {
+        qDebug() << "Removing playlist at" << i;
+        beginRemoveRows(QModelIndex(), i, i);
+        delete playlists.takeAt(i);
+        endRemoveRows();
+    }
 }
 
 

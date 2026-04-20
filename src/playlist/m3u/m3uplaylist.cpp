@@ -1,4 +1,5 @@
 #include "m3uplaylist.h"
+#include "../../utilities.h"
 #include <QCryptographicHash>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -9,135 +10,106 @@
 #include <QFile>
 #include <QDir>
 
-QNetworkAccessManager* M3UPlayList::_netmgr = NULL;
+QNetworkAccessManager* M3UPlayList::networkManagerInstance = NULL;
 const QString M3UPlayList::VERSION = "1.0";
 
-M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, QObject *parent): QObject(parent), _loaded(false), _count(0), _name(name), _url(url)
-{
-    this->_file = QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex() + ".playlist";
+M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, QObject *parent): QObject(parent), isLoaded(false), count(0), name(name), url(url) {
+    this->path = QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex() + ".playlist";
 }
 
-M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, const QString &file, int count, QObject *parent): QObject(parent), _loaded(false), _count(count), _name(name), _file(file), _url(url)
-{
+M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, const QString &file, int count, QObject *parent): QObject(parent), isLoaded(false), count(count), name(name), path(file), url(url)
+{}
 
+const QString& M3UPlayList::getName() const {
+    return this->name;
 }
 
-const QString& M3UPlayList::name() const
-{
-    return this->_name;
+const QString &M3UPlayList::getPath() const {
+    return this->path;
 }
 
-const QString &M3UPlayList::file() const
-{
-    return this->_file;
+const QUrl &M3UPlayList::getUrl() const {
+    return this->url;
 }
 
-const QUrl &M3UPlayList::url() const
-{
-    return this->_url;
+int M3UPlayList::channelsCount() const {
+    return isLoaded ? channels.count() : count;
 }
 
-int M3UPlayList::channelsCount() const
-{
-    if(!this->_loaded)
-        return this->_count;
-
-    return this->_channels.count();
+M3UChannel *M3UPlayList::channelAt(int i) const {
+    return this->channels.at(i);
 }
 
-M3UChannel *M3UPlayList::channelAt(int i) const
-{
-    return this->_channels.at(i);
+QNetworkAccessManager *M3UPlayList::networkManager() {
+    if (!M3UPlayList::networkManagerInstance)
+        M3UPlayList::networkManagerInstance = new QNetworkAccessManager(this->parent());
+
+    return M3UPlayList::networkManagerInstance;
 }
 
-QNetworkAccessManager *M3UPlayList::networkManager()
-{
-    if(!M3UPlayList::_netmgr)
-        M3UPlayList::_netmgr = new QNetworkAccessManager(this->parent());
-
-    return M3UPlayList::_netmgr;
+void M3UPlayList::download() {
+    QNetworkReply* reply = this->networkManager()->get(QNetworkRequest(this->url));
+    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleDownloadError(QNetworkReply::NetworkError))); // NOTE: Overload madness
+    connect(reply, SIGNAL(finished()), this, SLOT(handleDownloadFinished()));
 }
 
-void M3UPlayList::download()
-{
-    QNetworkReply* reply = this->networkManager()->get(QNetworkRequest(this->_url));
-    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onDownloadError(QNetworkReply::NetworkError))); // NOTE: Overload madness
-    connect(reply, SIGNAL(finished()), this, SLOT(onDownloadFinished()));
+void M3UPlayList::save(const QString &dest) {
+    QVariantList newChannels;
+    for (const M3UChannel *channel : this->channels)
+        newChannels.append(QVariantMap{
+                                {"name", channel->name()},
+                                {"url", channel->url().toString()},
+                                {"logo", channel->logo()}
+                            });
+
+    const QVariantMap data{
+        {"version", M3UPlayList::VERSION},
+        {"channels", newChannels}
+    };
+    writeJsonFile(QJsonDocument::fromVariant(data), dest + this->path);
 }
 
-void M3UPlayList::save(const QString &dest)
-{
-    QJsonObject jsobj;
-    QJsonArray jsdata;
-
-    for(int i = 0; i < this->_channels.length(); i++)
-    {
-        const M3UChannel* channel = this->_channels.at(i);
-
-        QJsonObject jspl;
-        jspl["name"] = channel->name();
-        jspl["url"] = channel->url().toString();
-        jspl["logo"] = channel->logo();
-
-        jsdata.append(jspl);
-    }
-
-    jsobj["version"] = M3UPlayList::VERSION;
-    jsobj["channels"] = jsdata;
-
-    QJsonDocument jsdoc;
-    jsdoc.setObject(jsobj);
-
-    QFile f(dest + QDir::separator() + this->_file);
-    f.open(QFile::WriteOnly);
-    f.write(jsdoc.toJson());
-    f.close();
-}
-
-void M3UPlayList::load(bool force)
-{
-    if(!force && this->_loaded)
+void M3UPlayList::load(bool force) {
+    if (!force && this->isLoaded)
         return;
 
-    QFile f(this->_file);
-    f.open(QFile::ReadOnly);
-    QByteArray pljsondata = f.readAll();
-    f.close();
-
-    QJsonDocument jsdoc = QJsonDocument::fromJson(pljsondata);
-    QJsonArray items = jsdoc.object()["channels"].toArray();
-
-    foreach(QJsonValue jsvalue, items)
-    {
-        QJsonObject jsobj = jsvalue.toObject();
-        this->_channels.append(new M3UChannel(jsobj["name"].toString(), jsobj["url"].toString(), jsobj["logo"].toString(), this));
+    QJsonDocument doc = readJsonFile(path);
+    if (doc.isNull()) {
+        qWarning("Couldn't read playlist file");
+        return;
     }
 
-    this->_loaded = true;
+    QVariantList channels = doc.object()["channels"].toArray().toVariantList();
+    for (const QVariant &channelVariant : channels) {
+        const QVariantMap channel = channelVariant.toMap();
+        this->channels.append(new M3UChannel(channel.value("name").toString(), channel.value("url").toString(), channel.value("logo").toString(), this));
+    }
+
+    this->isLoaded = true;
 }
 
-void M3UPlayList::onDownloadFinished()
-{
-    M3UParser m3uparser;
+void M3UPlayList::handleDownloadFinished() {
     QNetworkReply* reply = qobject_cast<QNetworkReply*>(this->sender());
+    if (reply->error()) // already handled by handleDownloadError
+        return;
+
+    qDebug("Download finished");
+    M3UParser m3uparser;
     QString m3udata = QString::fromUtf8(reply->readAll());
 
-    if(!m3uparser.parse(m3udata, this->_channels, this))
-    {
-        this->_channels.clear(); // Invalid playlist, delete all items
+    if (!m3uparser.parse(m3udata, this->channels, this)) {
+        this->channels.clear(); // Invalid playlist, delete all items
         emit error(m3uparser.lastError());
-    }
-    else
-    {
-        this->_loaded = true;
+    } else {
+        this->isLoaded = true;
         emit loaded();
     }
 
     reply->deleteLater();
 }
 
-void M3UPlayList::onDownloadError(QNetworkReply::NetworkError)
-{
+void M3UPlayList::handleDownloadError(QNetworkReply::NetworkError) {
+    qDebug("Network error");
     QNetworkReply* reply = qobject_cast<QNetworkReply*>(this->sender());
 
     emit error(reply->errorString());

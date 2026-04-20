@@ -73,7 +73,7 @@
         <translation>Scalette</translation>
     </message>
     <message>
-        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="44"/>
+        <location filename="../qml/pages/playlist/PlaylistsPage.qml" line="43"/>
         <source>Playlist is empty</source>
         <translation>La scaletta è vuota</translation>
     </message>
