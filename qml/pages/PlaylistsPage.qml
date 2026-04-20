@@ -9,6 +9,10 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                text: qsTr("About", "About the app")
+                onClicked: pageStack.push("AboutPage.qml")
+            }
+            MenuItem {
                 text: qsTr("Settings")
                 onClicked: pageStack.push("SettingsPage.qml")
             }

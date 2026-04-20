@@ -46,6 +46,7 @@ TRANSLATIONS += translations/harbour-streamfish-ru.ts \
     translations/harbour-streamfish-it.ts
 
 DISTFILES += \
+    qml/pages/AboutPage.qml \
     qml/pages/AddPlaylistPage.qml \
     qml/models/AddedPlayListModel.qml \
     qml/items/playlist/PlayListItem.qml \
