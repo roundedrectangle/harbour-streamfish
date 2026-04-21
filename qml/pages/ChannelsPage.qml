@@ -7,6 +7,11 @@ Page {
     // If the playlist object is deleted while the channels page is open, segemntation fault might happen, but that's very unlikely
     property alias playlist: channelsModel.playlist
 
+    Connections {
+        target: playlist
+        Component.onDestruction: pageStack.pop()
+    }
+
     SilicaFlickable {
         anchors.fill: parent
 
