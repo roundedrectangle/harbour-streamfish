@@ -23,9 +23,11 @@ Page {
         SearchField {
             id: searchField
             width: parent.width
+            height: visible ? implicitHeight : 0
             anchors.top: header.bottom
             inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
             labelVisible: false
+            visible: !!playlist
         }
 
         SilicaListView {
