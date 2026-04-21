@@ -4,16 +4,16 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>StreamFish is an IPTV client for SailfishOS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Translations</source>
-        <translation type="unfinished">Перевод</translation>
+        <translation>Перевод</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished">Итальянский</translation>
+        <translation>Итальянский</translation>
+    </message>
+    <message>
+        <source>Streamfish is an IPTV client for SailfishOS</source>
+        <translation>Клиент IPTV для SailfishOS</translation>
     </message>
 </context>
 <context>
@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес</translation>
     </message>
 </context>
 <context>
@@ -39,22 +39,15 @@
     </message>
     <message>
         <source>No playlist selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Плейлист не выбран</translation>
     </message>
     <message>
         <source>Swipe left to select a playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Проведите влево, чтобы выбрать плейлист</translation>
     </message>
     <message>
         <source>Channels in %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CoverPage</name>
-    <message>
-        <source>Streamfish</source>
-        <translation type="unfinished"></translation>
+        <translation>Каналы в %1</translation>
     </message>
 </context>
 <context>
@@ -174,7 +167,7 @@
     </message>
     <message>
         <source>You are using a mobile data connection.</source>
-        <translation type="unfinished">Вы используете мобильную передачу данных.</translation>
+        <translation>Вы используете мобильную передачу данных.</translation>
     </message>
     <message numerus="yes">
         <source>License(s)</source>
@@ -255,7 +248,7 @@
     <name>PlayListItem</name>
     <message numerus="yes">
         <source>%Ln channels</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%Ln канал</numerusform>
             <numerusform>%Ln канала</numerusform>
             <numerusform>%Ln каналов</numerusform>
@@ -263,7 +256,7 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>
@@ -271,11 +264,11 @@
     <message>
         <source>About</source>
         <comment>About the app</comment>
-        <translation type="unfinished">О программе</translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Add</source>
@@ -294,19 +287,19 @@
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Go to playlists page when closing the media player</source>
-        <translation type="unfinished"></translation>
+        <translation>Переходить к странице с плейлистами после закрытия плеера</translation>
     </message>
     <message>
         <source>Keep display active while media player is active</source>
-        <translation type="unfinished"></translation>
+        <translation>Оставлять экран включённым, пока медиаплеер активен</translation>
     </message>
     <message>
         <source>Open last playlist on start</source>
-        <translation type="unfinished"></translation>
+        <translation>Открывать последний плейлист при запуске</translation>
     </message>
 </context>
 </TS>

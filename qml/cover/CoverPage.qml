@@ -14,7 +14,7 @@ CoverBackground {
             anchors.horizontalCenter: parent.horizontalCenter
         }
         Label {
-            text: qsTr("Streamfish")
+            text: "Streamfish"
             anchors.horizontalCenter: parent.horizontalCenter
         }
     }

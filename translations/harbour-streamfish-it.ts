@@ -4,16 +4,16 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>StreamFish is an IPTV client for SailfishOS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Translations</source>
         <translation type="unfinished">Traduzioni</translation>
     </message>
     <message>
         <source>Italian</source>
         <translation type="unfinished">Italiano</translation>
+    </message>
+    <message>
+        <source>Streamfish is an IPTV client for SailfishOS</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -47,13 +47,6 @@
     </message>
     <message>
         <source>Channels in %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CoverPage</name>
-    <message>
-        <source>Streamfish</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

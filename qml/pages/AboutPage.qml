@@ -7,7 +7,7 @@ AboutPageBase {
     appName: "Streamfish"
     appIcon: 'qrc:///res/streamfish.svg'
     appVersion: '1.1.0'
-    description: qsTr("StreamFish is an IPTV client for SailfishOS")
+    description: qsTr("Streamfish is an IPTV client for SailfishOS")
     authors: ["roundedrectangle", "Dax89"]
     licenses: License { spdxId: 'GPL-3.0-or-later' }
     sourcesUrl: 'https://github.com/roundedrectangle/harbour-streamfish'
