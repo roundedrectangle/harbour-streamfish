@@ -16,12 +16,12 @@ CONFIG += sailfishapp c++11
 QT += multimedia
 
 SOURCES += src/harbour-streamfish.cpp \
-    src/playlist/playlistsmodel.cpp \
-    src/playlist/m3u/m3uparser.cpp \
-    src/playlist/m3u/m3uplaylist.cpp \
-    src/playlist/m3u/m3uchannel.cpp \
-    src/model/m3uchannelsmodel.cpp \
-    src/model/m3ufilteredchannelsmodel.cpp \
+    src/playlistsmodel.cpp \
+    src/m3u/m3uparser.cpp \
+    src/m3u/m3uplaylist.cpp \
+    src/m3u/m3uchannel.cpp \
+    src/m3uchannelsmodel.cpp \
+    src/m3ufilteredchannelsmodel.cpp \
     src/utilities.cpp
 
 OTHER_FILES += qml/harbour-streamfish.qml \
@@ -60,12 +60,12 @@ DISTFILES += \
     qml/pages/SettingsPage.qml
 
 HEADERS += \
-    src/playlist/playlistsmodel.h \
-    src/playlist/m3u/m3uplaylist.h \
-    src/playlist/m3u/m3uparser.h \
-    src/playlist/m3u/m3uchannel.h \
-    src/model/m3uchannelsmodel.h \
-    src/model/m3ufilteredchannelsmodel.h \
+    src/playlistsmodel.h \
+    src/m3u/m3uplaylist.h \
+    src/m3u/m3uparser.h \
+    src/m3u/m3uchannel.h \
+    src/m3uchannelsmodel.h \
+    src/m3ufilteredchannelsmodel.h \
     src/utilities.h
 
 RESOURCES += \
