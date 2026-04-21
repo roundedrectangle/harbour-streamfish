@@ -14,11 +14,23 @@
 QNetworkAccessManager* M3UPlayList::networkManagerInstance = NULL;
 const QString M3UPlayList::VERSION = "1.0";
 
-M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, QObject *parent): QObject(parent), isLoaded(false), count(0), name(name), url(url) {
+M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, QObject *parent)
+    : QObject(parent),
+      isLoaded(false),
+      count(0),
+      name(name),
+      url(url)
+{
     this->fileName = QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex() + ".playlist";
 }
 
-M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, const QString &file, int count, QObject *parent): QObject(parent), isLoaded(false), count(count), name(name), fileName(file), url(url)
+M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, const QString &file, int count, QObject *parent)
+    : QObject(parent),
+      isLoaded(false),
+      count(count),
+      name(name),
+      fileName(file),
+      url(url)
 {}
 
 const QString& M3UPlayList::getName() const {
