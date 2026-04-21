@@ -9,11 +9,11 @@
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Traduzioni</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Italiano</translation>
     </message>
 </context>
 <context>
@@ -72,7 +72,7 @@
     <name>LicenseListPart</name>
     <message>
         <source>License text</source>
-        <translation type="unfinished"></translation>
+        <translation>Testo della licenza</translation>
     </message>
 </context>
 <context>
@@ -90,86 +90,86 @@
     <name>Opal.About</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>In riguardo</translation>
     </message>
     <message>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versione %1</translation>
     </message>
     <message>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Sviluppo</translation>
     </message>
     <message>
         <source>show contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>mostra i collaboratori</translation>
     </message>
     <message>
         <source>Homepage</source>
-        <translation type="unfinished"></translation>
+        <translation>Pagina iniziale</translation>
     </message>
     <message>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Registro delle modifiche</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduzioni</translation>
     </message>
     <message>
         <source>Source Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Codice sorgente</translation>
     </message>
     <message>
         <source>Donations</source>
-        <translation type="unfinished"></translation>
+        <translation>Donazioni</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licenza</translation>
     </message>
     <message numerus="yes">
         <source>show license(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>mostra licenza</numerusform>
+            <numerusform>mostra licenze</numerusform>
         </translation>
     </message>
     <message>
         <source>News</source>
-        <translation type="unfinished"></translation>
+        <translation>Notizie</translation>
     </message>
     <message>
         <source>Changes since version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifiche dalla versione %1</translation>
     </message>
     <message>
         <source>show details</source>
-        <translation type="unfinished"></translation>
+        <translation>mostra dettagli</translation>
     </message>
     <message>
         <source>Thank you!</source>
-        <translation type="unfinished"></translation>
+        <translation>Grazie mille!</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Dettagli</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Collaboratori</translation>
     </message>
     <message>
         <source>Acknowledgements</source>
-        <translation type="unfinished"></translation>
+        <translation>Ringraziamenti</translation>
     </message>
     <message>
         <source>Please refer to &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Fare riferimento a &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Download license texts</source>
-        <translation type="unfinished"></translation>
+        <translation>Scarica i testi delle licenze</translation>
     </message>
     <message>
         <source>You are using a mobile data connection.</source>
@@ -177,60 +177,60 @@
     </message>
     <message numerus="yes">
         <source>License(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Licenza</numerusform>
+            <numerusform>Licenze</numerusform>
         </translation>
     </message>
     <message>
         <source>Note: please check the source code for most accurate information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nota: per informazioni più accurate, controllare il codice sorgente.</translation>
     </message>
 </context>
 <context>
     <name>Opal.About.Common</name>
     <message>
         <source>If you want to support my work, you can buy me a cup of coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se vuoi sostenere il mio lavoro, puoi offrirmi una tazza di caffè.</translation>
     </message>
     <message>
         <source>You can support this project by contributing, or by donating using any of these services.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puoi sostenere questo progetto contribuendo o effettuando una donazione tramite uno di questi servizi.</translation>
     </message>
     <message>
         <source>Your contributions to translations or code would be most welcome.</source>
-        <translation type="unfinished"></translation>
+        <translation>I vostri contributi alle traduzioni o al codice saranno molto graditi.</translation>
     </message>
 </context>
 <context>
     <name>Opal.LinkHandler</name>
     <message>
         <source>Copied to clipboard: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiato negli appunti: %1</translation>
     </message>
     <message>
         <source>Share link</source>
-        <translation type="unfinished"></translation>
+        <translation>Condividi collegamento</translation>
     </message>
     <message>
         <source>Phone number</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero di telefono</translation>
     </message>
     <message>
         <source>External link</source>
-        <translation type="unfinished"></translation>
+        <translation>Collegamento esterno</translation>
     </message>
     <message>
         <source>Open in browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri nel browser</translation>
     </message>
     <message>
         <source>Open externally</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri esternamente</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>Condividi</translation>
     </message>
     <message>
         <source>Copy link</source>
@@ -268,7 +268,7 @@
     <message>
         <source>About</source>
         <comment>About the app</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">In riguardo</translation>
     </message>
     <message>
         <source>Settings</source>
