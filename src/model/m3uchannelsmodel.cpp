@@ -6,12 +6,14 @@ void M3UChannelsModel::setPlaylist(M3UPlayList *playlist) {
     if (this->playlist == playlist)
         return;
 
+    beginResetModel();
     this->playlist = playlist;
 
     if (this->playlist)
         this->playlist->load();
 
     emit playlistChanged();
+    endResetModel();
 }
 
 QVariant M3UChannelsModel::data(const QModelIndex &index, int role) const {

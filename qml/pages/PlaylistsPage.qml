@@ -4,6 +4,8 @@ import harbour.streamfish.Model 1.0
 import "../items/playlist"
 
 Page {
+    signal playlistOpened(var playlist)
+
     SilicaFlickable {
         anchors.fill: parent
 
@@ -42,7 +44,10 @@ Page {
             delegate: PlayListItem {
                 title: playlist.name
                 channelsCount: playlist.channelsCount
-                onClicked: pageStack.push("ChannelsPage.qml", {playlist: playlist})
+                onClicked: {
+                    playlistsModel.lastOpenedIndex = index
+                    playlistOpened(playlist)
+                }
                 onRemoveRequested: playlistsModel.remove(index)
             }
 

@@ -1,4 +1,5 @@
 #include "m3uplaylist.h"
+#include "../playlistsmodel.h"
 #include "../../utilities.h"
 #include <QCryptographicHash>
 #include <QNetworkRequest>
@@ -14,18 +15,18 @@ QNetworkAccessManager* M3UPlayList::networkManagerInstance = NULL;
 const QString M3UPlayList::VERSION = "1.0";
 
 M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, QObject *parent): QObject(parent), isLoaded(false), count(0), name(name), url(url) {
-    this->path = QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex() + ".playlist";
+    this->fileName = QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex() + ".playlist";
 }
 
-M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, const QString &file, int count, QObject *parent): QObject(parent), isLoaded(false), count(count), name(name), path(file), url(url)
+M3UPlayList::M3UPlayList(const QString &name, const QUrl &url, const QString &file, int count, QObject *parent): QObject(parent), isLoaded(false), count(count), name(name), fileName(file), url(url)
 {}
 
 const QString& M3UPlayList::getName() const {
     return this->name;
 }
 
-const QString &M3UPlayList::getPath() const {
-    return this->path;
+const QString &M3UPlayList::getFileName() const {
+    return this->fileName;
 }
 
 const QUrl &M3UPlayList::getUrl() const {
@@ -53,7 +54,11 @@ void M3UPlayList::download() {
     connect(reply, SIGNAL(finished()), this, SLOT(handleDownloadFinished()));
 }
 
-void M3UPlayList::save(const QString &dest) {
+QString M3UPlayList::playlistsPath() {
+    return qobject_cast<PlaylistsModel*>(parent())->playlistsPath;
+}
+
+void M3UPlayList::save() {
     QVariantList newChannels;
     for (const M3UChannel *channel : this->channels)
         newChannels.append(QVariantMap{
@@ -66,14 +71,14 @@ void M3UPlayList::save(const QString &dest) {
         {"version", M3UPlayList::VERSION},
         {"channels", newChannels}
     };
-    writeJsonFile(QJsonDocument::fromVariant(data), dest + this->path);
+    writeJsonFile(QJsonDocument::fromVariant(data), playlistsPath() + this->fileName);
 }
 
 void M3UPlayList::load(bool force) {
     if (!force && this->isLoaded)
         return;
 
-    QJsonDocument doc = readJsonFile(path);
+    QJsonDocument doc = readJsonFile(playlistsPath() + fileName);
     if (doc.isNull()) {
         qWarning("Couldn't read playlist file");
         return;

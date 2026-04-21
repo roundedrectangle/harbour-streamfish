@@ -31,10 +31,13 @@ void PlaylistsModel::load() {
         return;
     }
 
-    QJsonArray playlists = doc.object()["playlists"].toArray();
-    for (const QJsonValue &playlistValue : playlists) {
-        QJsonObject playlist = playlistValue.toObject();
-        this->playlists.append(new M3UPlayList(playlist["name"].toString(), QUrl(playlist["url"].toString()), playlist["file"].toString(), playlist["count"].toInt(), this));
+    const QVariantMap map = doc.object().toVariantMap();
+
+    this->lastOpenedIndex = map.value("lastOpenedIndex").toInt();
+
+    for (const QVariant &playlistVariant : map.value("playlists").toList()) {
+        QVariantMap playlist = playlistVariant.toMap();
+        this->playlists.append(new M3UPlayList(playlist.value("name").toString(), QUrl(playlist.value("url").toString()), playlist.value("file").toString(), playlist.value("count").toInt(), this));
     }
 }
 
@@ -48,13 +51,14 @@ void PlaylistsModel::save() const {
         newPlaylists.append(QVariantMap{
                                 {"name", playlist->getName()},
                                 {"count", playlist->channelsCount()},
-                                {"file", playlistsPath + playlist->getPath()},
+                                {"file", playlist->getFileName()},
                                 {"url", playlist->getUrl().toString()},
                             });
 
     const QVariantMap data{
         {"version", PlaylistsModel::VERSION},
-        {"playlists", newPlaylists}
+        {"playlists", newPlaylists},
+        {"lastOpenedIndex", lastOpenedIndex}
     };
     writeJsonFile(QJsonDocument::fromVariant(data), playlistsFilePath());
 }
@@ -72,7 +76,7 @@ void PlaylistsModel::handlePlaylistLoaded() {
     beginInsertRows(QModelIndex(), i, i);
 
     this->playlists.append(playlist);
-    playlist->save(playlistsPath);
+    playlist->save();
     this->save();
 
     endInsertRows();
@@ -98,16 +102,30 @@ void PlaylistsModel::remove(int i) {
         qDebug() << "Removing playlist at" << i;
         beginRemoveRows(QModelIndex(), i, i);
         delete playlists.takeAt(i);
+
+        if (lastOpenedIndex == i) {
+            lastOpenedIndex = -1;
+            emit lastOpenedIndexChanged();
+            emit lastOpenedPlaylistChanged();
+        } else if (lastOpenedIndex > i) {
+            lastOpenedIndex--;
+            emit lastOpenedIndexChanged();
+        }
+
+        save();
         endRemoveRows();
     }
 }
 
+QVariant PlaylistsModel::playlistAt(int i) const {
+    if (i >= 0 && i < playlists.count())
+        return QVariant::fromValue(playlists.at(i));
+    return QVariant();
+}
 
 QVariant PlaylistsModel::data(const QModelIndex &index, int role) const {
-    int i = index.row();
-    if (i >= 0 && i < playlists.size() && role == RolePlaylist)
-        return QVariant::fromValue(playlists.at(i));
-
+    if (role == RolePlaylist)
+        return playlistAt(index.row());
     return QVariant();
 }
 
@@ -117,4 +135,20 @@ int PlaylistsModel::rowCount(const QModelIndex &) const {
 
 QHash<int, QByteArray> PlaylistsModel::roleNames() const {
     return {{RolePlaylist, "playlist"}};
+}
+
+
+void PlaylistsModel::setLastOpenedIndex(int index) {
+    if (lastOpenedIndex != index) {
+        qDebug() << "Setting last opened index" << lastOpenedIndex << index;
+        lastOpenedIndex = index;
+
+        emit lastOpenedIndexChanged();
+        emit lastOpenedPlaylistChanged();
+    }
+}
+
+QVariant PlaylistsModel::lastOpened() const {
+    qDebug() << "Getting last opened playlist" << lastOpenedIndex;
+    return playlistAt(lastOpenedIndex);
 }

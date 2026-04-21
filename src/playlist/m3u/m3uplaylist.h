@@ -17,11 +17,11 @@ public:
     explicit M3UPlayList(const QString& name, const QUrl& url, QObject *parent = nullptr);
     explicit M3UPlayList(const QString& name, const QUrl& url, const QString& file, int count, QObject *parent = nullptr);
     const QString& getName() const;
-    const QString& getPath() const;
+    const QString& getFileName() const;
     const QUrl& getUrl() const;
     int channelsCount() const;
     M3UChannel* channelAt(int i) const;
-    void save(const QString& dest);
+    void save();
     void load(bool force = false);
     void download();
 
@@ -35,11 +35,13 @@ signals:
     void channelsCountChanged();
 
 private:
+    QString playlistsPath();
+
     bool isLoaded;
     int count;
     QList<M3UChannel*> channels;
     QString name;
-    QString path;
+    QString fileName;
     QUrl url;
 
 private:

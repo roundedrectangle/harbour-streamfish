@@ -7,18 +7,12 @@ Page {
     // If the playlist object is deleted while the channels page is open, segemntation fault might happen, but that's very unlikely
     property alias playlist: channelsModel.playlist
 
-    Connections {
-        target: playlist
-        Component.onDestruction: pageStack.pop()
-    }
-
     SilicaFlickable {
         anchors.fill: parent
 
         PageHeader {
             id: header
             title: qsTr("Channels")
-            anchors { left: parent.left; top: parent.top; right: parent.right }
         }
 
         SearchField {
@@ -47,7 +41,14 @@ Page {
                 contentHeight: Theme.itemSizeSmall
                 title: channel.name
                 logoUrl: channel.logo
-                onClicked: (config.replaceChannelsWithPlayer ? pageStack.replace : pageStack.push)("MediaPlayerPage.qml", {channel: channel})
+                onClicked:
+                    (!config.openLastPlaylistOnStart && config.replaceChannelsWithPlayer ? pageStack.replace : pageStack.push)("MediaPlayerPage.qml", {channel: channel})
+            }
+
+            ViewPlaceholder {
+                enabled: !playlist && config.openLastPlaylistOnStart
+                text: qsTr("No playlist selected")
+                hintText: qsTr("Swipe left to select a playlist")
             }
         }
     }
