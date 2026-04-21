@@ -45,6 +45,10 @@
         <source>Swipe left to select a playlist</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Channels in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>

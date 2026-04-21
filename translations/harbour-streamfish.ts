@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<TS version="2.1">
 <context>
     <name>AboutPage</name>
     <message>
@@ -20,11 +20,11 @@
     <name>AddPlaylistPage</name>
     <message>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Название</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>URL</source>
@@ -34,8 +34,12 @@
 <context>
     <name>ChannelsPage</name>
     <message>
+        <source>Channels in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Channels</source>
-        <translation>Канал</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No playlist selected</source>
@@ -43,10 +47,6 @@
     </message>
     <message>
         <source>Swipe left to select a playlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Channels in %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -79,11 +79,11 @@
     <name>M3UParser</name>
     <message>
         <source>Malformed M3U playlist, skipping line %1</source>
-        <translation>Повреждённый плейлист M3U, пропускается линия %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Invalid M3U playlist</source>
-        <translation>Неправильный плейлист M3U</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -132,8 +132,6 @@
         <source>show license(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -179,8 +177,6 @@
     <message numerus="yes">
         <source>License(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -256,9 +252,7 @@
     <message numerus="yes">
         <source>%Ln channels</source>
         <translation type="unfinished">
-            <numerusform>%Ln канал</numerusform>
-            <numerusform>%Ln канала</numerusform>
-            <numerusform>%Ln каналов</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -279,15 +273,15 @@
     </message>
     <message>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playlists</source>
-        <translation>Плейлисты</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playlist is empty</source>
-        <translation>Плейлист пуст</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -297,15 +291,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Go to playlists page when closing the media player</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Keep display active while media player is active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open last playlist on start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Go to playlists page when closing the media player</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
