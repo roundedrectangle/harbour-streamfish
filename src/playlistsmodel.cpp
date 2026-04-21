@@ -33,7 +33,7 @@ void PlaylistsModel::load() {
 
     const QVariantMap map = doc.object().toVariantMap();
 
-    this->lastOpenedIndex = map.value("lastOpenedIndex").toInt();
+    this->lastOpenedIndex = map.value("lastOpenedIndex", -1).toInt();
 
     for (const QVariant &playlistVariant : map.value("playlists").toList()) {
         QVariantMap playlist = playlistVariant.toMap();
