@@ -17,7 +17,7 @@ Page {
 
         PageHeader {
             id: header
-            title: qsTr("Channels")
+            title: config.openLastPlaylistOnStart && playlist ? qsTr("Channels in %1").arg(playlist.name) : qsTr("Channels")
         }
 
         SearchField {
