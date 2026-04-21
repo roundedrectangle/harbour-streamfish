@@ -3,7 +3,7 @@ import QtMultimedia 5.0
 import Sailfish.Silica 1.0
 import Nemo.KeepAlive 1.2
 
-Page {
+FullscreenContentPage {
     id: page
     objectName: 'mediaPlayerPage'
     allowedOrientations: Orientation.LandscapeMask
@@ -24,9 +24,13 @@ Page {
         readonly property bool isPlaying: playbackState === MediaPlayer.PlayingState
         readonly property bool haveError: error !== MediaPlayer.NoError
 
-        onPlaying:
-            if (overlay.active)
-                hideOverlayTimer.restart()
+        onIsPlayingChanged:
+            if (overlay.active) {
+                if (isPlaying)
+                    hideOverlayTimer.restart()
+                else
+                    hideOverlayTimer.stop()
+            }
 
         onHaveErrorChanged:
             if (haveError) stop()
@@ -34,7 +38,7 @@ Page {
         Rectangle {
             id: errorRectangle
             anchors.fill: parent
-            color: Theme.rgba(Theme.overlayBackgroundColor, Theme.opacityOverlay)
+            color: Theme.rgba(palette.overlayBackgroundColor, Theme.opacityOverlay)
             visible: video.haveError
 
             Label {
@@ -46,6 +50,11 @@ Page {
                 color: Theme.errorColor
                 text: video.errorString
             }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: overlay.active = !overlay.active
         }
 
         Item {
@@ -60,38 +69,47 @@ Page {
 
             Timer {
                 id: hideOverlayTimer
-                interval: 2000
+                interval: 5000
                 onTriggered: overlay.active = false
             }
             onActiveChanged:
-                if (active && video.isPlaying) hideOverlayTimer.restart()
+                if (active) {
+                    if (video.isPlaying)
+                        hideOverlayTimer.restart()
+                } else
+                    hideOverlayTimer.stop()
 
-            Label {
-                y: Theme.paddingLarge
-                x: Theme.horizontalPageMargin
-                width: parent.width - 2*x
-                text: channel.name
-                truncationMode: TruncationMode.Fade
+            Rectangle {
+                width: parent.width
+                height: header.height + Theme.itemSizeMedium
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: Theme.rgba(palette.overlayBackgroundColor, Theme.opacityOverlay) }
+                    GradientStop { position: 1.0; color: 'transparent' }
+                }
+            }
+
+            PageHeader {
+                id: header
+                title: channel.name
+                titleColor: palette.primaryColor
             }
 
             IconButton {
                 anchors.centerIn: parent
-                icon.source: 'image://theme/icon-m-' + (video.isPlaying ? 'pause' : 'play')
+                width: Theme.iconSizeLarge
+                height: Theme.iconSizeLarge
+                icon.source: 'image://theme/icon-l-opaque-' + (video.isPlaying ? 'pause' : 'play')
+                //icon.source: 'image://theme/icon-video-overlay-' + (video.isPlaying ? 'pause' : 'play')
+                icon.color: undefined
                 onClicked:
                     if (video.isPlaying) video.pause()
                     else video.play()
             }
         }
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: overlay.active = !overlay.active
-        }
-
         BusyIndicator {
-            id: busyIndicator
             anchors.centerIn: parent
-            running: video.playbackState !== MediaPlayer.PlayingState && (status === MediaPlayer.Loading || status === MediaPlayer.Stalled)
+            running: video.playbackState !== MediaPlayer.PlayingState && (video.status === MediaPlayer.Loading || video.status === MediaPlayer.Stalled)
             size: BusyIndicatorSize.Large
         }
     }
