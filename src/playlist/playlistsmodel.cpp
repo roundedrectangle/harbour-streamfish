@@ -22,14 +22,6 @@ PlaylistsModel::PlaylistsModel(QObject *parent) : QAbstractListModel(parent) {
     load();
 }
 
-int PlaylistsModel::playlistCount() const {
-    return this->playlists.count();
-}
-
-M3UPlayList *PlaylistsModel::playlistAt(int idx) const {
-    return this->playlists.at(idx);
-}
-
 void PlaylistsModel::load() {
     qDebug() << "Loading playlists";
 

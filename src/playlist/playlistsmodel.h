@@ -9,8 +9,6 @@ class PlaylistsModel : public QAbstractListModel {
 
 public:
     explicit PlaylistsModel(QObject *parent = nullptr);
-    int playlistCount() const;
-    M3UPlayList* playlistAt(int idx) const;
 
     Q_INVOKABLE void load();
     Q_INVOKABLE void add(const QString &name, const QString &url);
