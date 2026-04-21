@@ -1,5 +1,5 @@
 #include "playlistsmodel.h"
-#include "../utilities.h"
+#include "utilities.h"
 #include <QCryptographicHash>
 #include <QJsonDocument>
 #include <QJsonObject>

@@ -1,6 +1,6 @@
 #include "m3uplaylist.h"
 #include "../playlistsmodel.h"
-#include "../../utilities.h"
+#include "../utilities.h"
 #include <QCryptographicHash>
 #include <QNetworkRequest>
 #include <QNetworkReply>

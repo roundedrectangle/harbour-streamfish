@@ -5,7 +5,7 @@
 #include <QString>
 #include "m3uchannel.h"
 
-class M3UParser: public QObject {
+class M3UParser : public QObject {
     Q_OBJECT
 
 public:
