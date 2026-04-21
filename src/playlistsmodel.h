@@ -49,7 +49,7 @@ private:
 
 private:
     static const QString PLAYLISTS_PATH;
-    static const QString VERSION;
+    static const int VERSION;
 };
 
 #endif // PLAYLISTSMODEL_H

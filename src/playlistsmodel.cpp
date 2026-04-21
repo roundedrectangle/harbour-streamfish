@@ -11,19 +11,19 @@
 #include <QRegularExpression>
 
 const QString PlaylistsModel::PLAYLISTS_PATH = "playlists";
-const QString PlaylistsModel::VERSION = "1.0";
+const int PlaylistsModel::VERSION = 0;
 
 // TODO: removing playlists
 
 PlaylistsModel::PlaylistsModel(QObject *parent) : QAbstractListModel(parent) {
-    this->playlistsPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QDir::separator() + PlaylistsModel::PLAYLISTS_PATH + QDir::separator();
+    this->playlistsPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QDir::separator() + PLAYLISTS_PATH + QDir::separator();
     QDir().mkpath(this->playlistsPath);
 
     load();
 }
 
 void PlaylistsModel::load() {
-    qDebug() << "Loading playlists";
+    qDebug("Loading playlists");
 
     QJsonDocument doc = readJsonFile(playlistsFilePath());
     if (doc.isNull()) {
@@ -32,20 +32,32 @@ void PlaylistsModel::load() {
     }
 
     const QVariantMap map = doc.object().toVariantMap();
+    int version = map.value("version").userType() == QMetaType::QString ? -1 : map.value("version").toInt();
 
     this->lastOpenedIndex = map.value("lastOpenedIndex", -1).toInt();
 
     for (const QVariant &playlistVariant : map.value("playlists").toList()) {
         QVariantMap playlist = playlistVariant.toMap();
-        this->playlists.append(new M3UPlayList(playlist.value("name").toString(), QUrl(playlist.value("url").toString()), playlist.value("file").toString(), playlist.value("count").toInt(), this));
+
+        QString fileName = playlist.value("file").toString();
+        if (version == -1)
+            fileName = QUrl::fromLocalFile(fileName).fileName();
+
+        this->playlists.append(new M3UPlayList(playlist.value("name").toString(), QUrl(playlist.value("url").toString()), fileName, playlist.value("count").toInt(), this));
+    }
+
+    if (version < VERSION) {
+        qInfo() << "Updating version from" << version << "to" << VERSION;
+        save();
     }
 }
 
 QString PlaylistsModel::playlistsFilePath() const {
-    return playlistsPath + PlaylistsModel::PLAYLISTS_PATH + ".json";
+    return playlistsPath + PLAYLISTS_PATH + ".json";
 }
 
 void PlaylistsModel::save() const {
+    qDebug("Saving playlists");
     QVariantList newPlaylists;
     for (const M3UPlayList *playlist : this->playlists)
         newPlaylists.append(QVariantMap{
@@ -56,7 +68,7 @@ void PlaylistsModel::save() const {
                             });
 
     const QVariantMap data{
-        {"version", PlaylistsModel::VERSION},
+        {"version", VERSION},
         {"playlists", newPlaylists},
         {"lastOpenedIndex", lastOpenedIndex}
     };
