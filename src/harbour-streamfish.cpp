@@ -1,9 +1,9 @@
 #include <QtQuick>
 #include <sailfishapp.h>
-#include "playlist/m3u/m3uchannel.h"
-#include "playlist/playlistsmodel.h"
-#include "model/m3uchannelsmodel.h"
-#include "model/m3ufilteredchannelsmodel.h"
+#include "m3u/m3uchannel.h"
+#include "playlistsmodel.h"
+#include "m3uchannelsmodel.h"
+#include "m3ufilteredchannelsmodel.h"
 
 int main(int argc, char *argv[]) {
     QScopedPointer<QGuiApplication> application(SailfishApp::application(argc, argv));

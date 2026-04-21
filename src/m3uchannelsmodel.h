@@ -2,7 +2,7 @@
 #define M3UCHANNELSMODEL_H
 
 #include <QAbstractListModel>
-#include "../playlist/m3u/m3uplaylist.h"
+#include "m3u/m3uplaylist.h"
 
 class M3UChannelsModel : public QAbstractListModel {
     Q_OBJECT
