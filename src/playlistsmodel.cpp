@@ -77,7 +77,7 @@ void PlaylistsModel::handlePlaylistLoaded() {
 
     this->playlists.append(playlist);
     playlist->save();
-    this->save();
+    save();
 
     endInsertRows();
 }
@@ -142,6 +142,7 @@ void PlaylistsModel::setLastOpenedIndex(int index) {
     if (lastOpenedIndex != index) {
         qDebug() << "Setting last opened index" << lastOpenedIndex << index;
         lastOpenedIndex = index;
+        save();
 
         emit lastOpenedIndexChanged();
         emit lastOpenedPlaylistChanged();
