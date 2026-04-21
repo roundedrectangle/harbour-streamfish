@@ -6,7 +6,7 @@ AboutPageBase {
     allowedOrientations: Orientation.All
     appName: "Streamfish"
     appIcon: 'qrc:///res/streamfish.svg'
-    appVersion: '1.0.1'
+    appVersion: '1.1.0'
     description: qsTr("StreamFish is an IPTV client for SailfishOS")
     authors: ["roundedrectangle", "Dax89"]
     licenses: License { spdxId: 'GPL-3.0-or-later' }
