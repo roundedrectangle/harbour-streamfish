@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="it">
+<TS version="2.1" language="it_IT">
 <context>
     <name>AboutPage</name>
     <message>
         <source>Translations</source>
-        <translation type="unfinished">Traduzioni</translation>
+        <translation>Traduzioni</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished">Italiano</translation>
+        <translation>Italiano</translation>
     </message>
     <message>
         <source>Streamfish is an IPTV client for SailfishOS</source>
-        <translation type="unfinished"></translation>
+        <translation>Streamfish è un client IPTV per Sailfish OS</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Add</source>
@@ -39,26 +39,26 @@
     </message>
     <message>
         <source>No playlist selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessuna scaletta selezionata</translation>
     </message>
     <message>
         <source>Swipe left to select a playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Trascina a sinistra per scegliere una scaletta</translation>
     </message>
     <message>
         <source>Channels in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Canali in %1</translation>
     </message>
 </context>
 <context>
     <name>ExternalUrlPage</name>
     <message>
         <source>Swipe left to preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trascina a sinistra per l&apos;anteprima.</translation>
     </message>
     <message>
         <source>You are using a mobile data connection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stai usando una connessione dati mobile.</translation>
     </message>
 </context>
 <context>
@@ -72,18 +72,18 @@
     <name>M3UParser</name>
     <message>
         <source>Invalid M3U playlist</source>
-        <translation>Scaletta M3U Non valida</translation>
+        <translation>Scaletta M3U non valida</translation>
     </message>
     <message>
         <source>Malformed M3U playlist, skipping line %1</source>
-        <translation>Salto la linea %1, pcaletta M3U malforme</translation>
+        <translation>Sto saltando %1, scaletta M3U errata</translation>
     </message>
 </context>
 <context>
     <name>Opal.About</name>
     <message>
         <source>About</source>
-        <translation>In riguardo</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -166,7 +166,7 @@
     </message>
     <message>
         <source>You are using a mobile data connection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stai usando una connessione dati mobile.</translation>
     </message>
     <message numerus="yes">
         <source>License(s)</source>
@@ -227,19 +227,19 @@
     </message>
     <message>
         <source>Copy link</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia collegamento</translation>
     </message>
     <message>
         <source>Copy text</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia testo</translation>
     </message>
     <message>
         <source>No preview available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessuna anteprima disponibile.</translation>
     </message>
     <message>
         <source>The page is taking too long to load.</source>
-        <translation type="unfinished"></translation>
+        <translation>La pagina sta impiegando troppo a caricarsi.</translation>
     </message>
 </context>
 <context>
@@ -253,7 +253,7 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi</translation>
     </message>
 </context>
 <context>
@@ -261,11 +261,11 @@
     <message>
         <source>About</source>
         <comment>About the app</comment>
-        <translation type="unfinished">In riguardo</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni</translation>
     </message>
     <message>
         <source>Playlists</source>
@@ -273,7 +273,7 @@
     </message>
     <message>
         <source>Playlist is empty</source>
-        <translation>La scaletta è vuota</translation>
+        <translation>Non c&apos;è niente. Configura una scaletta</translation>
     </message>
     <message>
         <source>Add</source>
@@ -284,19 +284,19 @@
     <name>SettingsPage</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni</translation>
     </message>
     <message>
         <source>Go to playlists page when closing the media player</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai alla pagina di selezione scalette quando chiudi il lettore media</translation>
     </message>
     <message>
         <source>Keep display active while media player is active</source>
-        <translation type="unfinished"></translation>
+        <translation>Tieni attivo lo schermo quando il lettore media è in esecuzione</translation>
     </message>
     <message>
         <source>Open last playlist on start</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri direttamente l&apos;ultima scaletta usata all&apos;avvio</translation>
     </message>
 </context>
 </TS>
