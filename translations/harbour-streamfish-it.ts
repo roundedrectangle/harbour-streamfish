@@ -273,7 +273,7 @@
     </message>
     <message>
         <source>Playlist is empty</source>
-        <translation>Non c&apos;è niente. Configura una scaletta</translation>
+        <translation>Nessuna scaletta. Prova ad aggiungerne una</translation>
     </message>
     <message>
         <source>Add</source>
