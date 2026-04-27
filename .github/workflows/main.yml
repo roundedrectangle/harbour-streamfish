@@ -7,11 +7,11 @@ on:
   push:
     tags:
       - '*'
-    branches:
-      - main
-    paths-ignore:
-      - README.md
-      - LICENSE.txt
+    # branches:
+    #   - main
+    # paths-ignore:
+    #   - README.md
+    #   - LICENSE.txt
   pull_request:
     branches:
       - main
